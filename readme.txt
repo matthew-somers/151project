@@ -1,1 +1,1 @@
-Our cs151 Mancala game project.
+Our cs151 Mancala game project. 
