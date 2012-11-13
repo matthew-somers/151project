@@ -65,6 +65,11 @@ public class NumView extends MancalaView
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 	}
+	
+	public void updateButton(JButton button, int data)
+	{
+		button.setText(data + "");
+	}
 
 
 }

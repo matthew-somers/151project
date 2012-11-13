@@ -32,16 +32,21 @@ public class MancalaView extends JComponent implements ChangeListener
 		for (int i = 0; (i < b1.length) && (i < b2.length); i++)
 		{
 			JButton jb1 = (JButton) b1[i];
-			jb1.setText(p1board[i] + "");
+			updateButton(jb1, p1board[i]);
 			
 			JButton jb2 = (JButton) b2[i];
 			// remember, p2 starts counting in reverse
 			// as if they were on opposite side of table
-			jb2.setText(p2board[(MancalaModel.PIT_SIZE-1-i)] + "");
+			updateButton(jb2, p2board[(MancalaModel.PIT_SIZE-1-i)]);
 		}
 		
 		p1Mancala.setText(p1board[MancalaModel.PIT_SIZE] + "");
 		p2Mancala.setText(p2board[MancalaModel.PIT_SIZE] + "");
+	}
+	
+	public void updateButton(JButton button, int data)
+	{
+		this.updateButton(button, data);
 	}
 
 }

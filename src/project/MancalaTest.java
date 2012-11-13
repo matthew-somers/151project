@@ -10,7 +10,7 @@ public class MancalaTest
 		MancalaModel model = new MancalaModel(starting_stones);
 		MancalaController controller = new MancalaController(model);
 		NumView numview = new NumView(controller);
-		IconView iconview = new IconView();
+		IconView iconview = new IconView(controller);
 		
 		model.addView(numview);
 		model.addView(iconview);
