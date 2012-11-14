@@ -5,14 +5,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
 
-public class NumView extends MancalaView 
+public class NumView implements MancalaView 
 {
+	private JPanel p1Pits;
+	private JPanel p2Pits;
+	private JButton p1Mancala;
+	private JButton p2Mancala;
+	
 	public NumView(MancalaController controller)
-	{
-		super();
-		
+	{	
 		JComponent boardview = new JPanel();
+		p1Pits = new JPanel();
+		p2Pits = new JPanel();
+		p1Mancala = new JButton();
+		p2Mancala = new JButton();
+		
 		boardview.setLayout(new BorderLayout());
 		p1Pits.setLayout(new FlowLayout());
 		p2Pits.setLayout(new FlowLayout());
@@ -64,6 +73,29 @@ public class NumView extends MancalaView
 		frame.pack();
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
+	}
+	
+	public void stateChanged(ChangeEvent event) 
+	{
+		MancalaModel model = (MancalaModel) event.getSource();
+		int[] p1board = model.getp1board();
+		int[] p2board = model.getp2board();
+		Component[] b1 = p1Pits.getComponents();
+		Component[] b2 = p2Pits.getComponents();
+		
+		for (int i = 0; (i < b1.length) && (i < b2.length); i++)
+		{
+			JButton jb1 = (JButton) b1[i];
+			updateButton(jb1, p1board[i]);
+			
+			JButton jb2 = (JButton) b2[i];
+			// remember, p2 starts counting in reverse
+			// as if they were on opposite side of table
+			updateButton(jb2, p2board[(MancalaModel.PIT_SIZE-1-i)]);
+		}
+		
+		updateButton(p1Mancala, p1board[MancalaModel.PIT_SIZE]);
+		updateButton(p2Mancala, p2board[MancalaModel.PIT_SIZE]);
 	}
 	
 	public void updateButton(JButton button, int data)

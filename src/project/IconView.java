@@ -1,14 +1,19 @@
 package project;
 
 import javax.swing.JButton;
+import javax.swing.event.ChangeEvent;
 
-public class IconView extends MancalaView
+public class IconView implements MancalaView
 {
 	public IconView(MancalaController controller)
 	{
-		super();
 		//another view
 		
+	}
+	
+	public void stateChanged(ChangeEvent event) 
+	{
+
 	}
 	
 	public void updateButton(JButton button, int data)
