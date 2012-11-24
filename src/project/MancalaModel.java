@@ -13,26 +13,42 @@ public class MancalaModel extends Observable
 	ArrayList<MancalaView> views;
 	public static final int PIT_SIZE = 6;
 
-	public MancalaModel(int starting_stones)
+	public MancalaModel()//int starting_stones)
 	{
 		p1board = new int[PIT_SIZE+1]; // 6 pits, last is p1's mancala
 		p2board = new int[PIT_SIZE+1]; // 6 pits, last is p2's mancala
-		
+/*
 		for (int i = 0; i < PIT_SIZE; i ++)
 		{
 			p1board[i] = starting_stones;
 			p2board[i] = starting_stones;
 		}
+	*/
 		views = new ArrayList<MancalaView>();
 	}
 	
 	public int[] getp1board() { return p1board; }
 	public int[] getp2board() { return p2board; }
 	
+	/**
+	 * class to initialize the number of stones and update the view
+	 * @param starting_stones the number of stones
+	 */
+	public void initializeStones(int starting_stones)
+	{
+		for (int i = 0; i < PIT_SIZE; i ++)
+		{
+			p1board[i] = starting_stones;
+			p2board[i] = starting_stones;
+		}
+		notifyViews();
+	}
+	
+	
 	public void addView(MancalaView mview)
 	{
 		views.add(mview);
-		notifyViews();
+		//notifyViews();
 	}
 	
 	public void makeMove(JButton buttonclicked)

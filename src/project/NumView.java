@@ -1,9 +1,6 @@
 package project;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.*;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 
@@ -13,14 +10,21 @@ public class NumView implements MancalaView
 	private JPanel p2Pits;
 	private JButton p1Mancala;
 	private JButton p2Mancala;
+	private JPanel boardview;
 	
+	/**
+	 * constructor for NumView
+	 * @param controller the controller of the Mancala game
+	 */
 	public NumView(MancalaController controller)
 	{	
-		JComponent boardview = new JPanel();
+		boardview = new JPanel();
 		p1Pits = new JPanel();
 		p2Pits = new JPanel();
 		p1Mancala = new JButton();
 		p2Mancala = new JButton();
+		p1Mancala.setPreferredSize(new Dimension (100,150));
+		p2Mancala.setPreferredSize(new Dimension(100,150));
 		
 		boardview.setLayout(new BorderLayout());
 		p1Pits.setLayout(new FlowLayout());
@@ -30,7 +34,9 @@ public class NumView implements MancalaView
 		for (int i = 0; i < MancalaModel.PIT_SIZE; i++)
 		{
 			JButton p1butt = new JButton();
+			p1butt.setPreferredSize(new Dimension (80,50));
 			JButton p2butt = new JButton();
+			p2butt.setPreferredSize(new Dimension (80,50));
 			
 			p1butt.addActionListener(controller);
 			p2butt.addActionListener(controller);
@@ -41,8 +47,8 @@ public class NumView implements MancalaView
 		//p1Mancala.setText();
 		//p2Mancala.setText(starting_stones + "");
 		
-		p1Pits.setPreferredSize(new Dimension(325, 35));
-		p2Pits.setPreferredSize(new Dimension(325, 35));
+		p1Pits.setPreferredSize(new Dimension(500, 60));
+		p2Pits.setPreferredSize(new Dimension(500, 60));
 	
 		boardview.add(p1Mancala, BorderLayout.EAST);
 		boardview.add(p2Mancala, BorderLayout.WEST);
@@ -63,16 +69,6 @@ public class NumView implements MancalaView
 		labels.add(p2mancala, BorderLayout.WEST);
 		
 		boardview.add(labels, BorderLayout.CENTER);
-		
-		//frame stuff
-		JFrame frame = new JFrame();
-		//frame.setSize(400, 200);
-		frame.setTitle("Mancala Game");
-		frame.add(boardview);
-		//frame.setResizable(false);
-		frame.pack();
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 	}
 	
 	public void stateChanged(ChangeEvent event) 
@@ -98,10 +94,34 @@ public class NumView implements MancalaView
 		updateButton(p2Mancala, p2board[MancalaModel.PIT_SIZE]);
 	}
 	
+	
+	/**
+	 * method to update the View
+	 * @param button the button 
+	 * @param int the data index to be changed
+	 */
 	public void updateButton(JButton button, int data)
 	{
 		button.setText(data + "");
 	}
 
-
+	
+	/**
+	 * accessor to get the main panel to the view
+	 * @return the panel of this view
+	 */
+	public JPanel getPanel()
+	{
+		return boardview;
+	}
+	
+	
+	/**
+	 * accessor to get the dimension of this view
+	 * @return the dimension of this view
+	 */
+	public Dimension getDimension()
+	{
+		return new Dimension(700,200);
+	}
 }
