@@ -14,6 +14,7 @@ import javax.swing.*;
  */
 public class MancalaFrame extends JFrame
 {
+	/*
 	private MancalaView view;
 
 	int numStones;
@@ -23,6 +24,7 @@ public class MancalaFrame extends JFrame
 	 * this class can plug in different style of view that implements the MancalaView
 	 * @param view the MancalaView style that can be plugged in
 	 */
+	/*
 	public MancalaFrame(MancalaView v)
 	{
 		numStones = 0;
@@ -37,6 +39,7 @@ public class MancalaFrame extends JFrame
 	/**
 	 * create a dialog box to prompt the user enter the number of starting stones
 	 */
+	/*
 	public void setStartingStones()
 	{
 		Object[] possibleValues = { "3", "4"};
@@ -50,6 +53,6 @@ public class MancalaFrame extends JFrame
 	{
 		setStartingStones();
 		return numStones;
-	}
+	}*/
 
 }

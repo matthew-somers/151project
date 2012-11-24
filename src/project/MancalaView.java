@@ -26,16 +26,4 @@ public interface MancalaView
 	 * @param data
 	 */
 	public void updateButton(JButton button, int data);
-	
-	/**
-	 * accessor to get the panel of the view
-	 * @return the panel
-	 */
-	public JPanel getPanel();
-	
-	/**
-	 * accessor to get the dimension of the view
-	 * @return the dimension of the view
-	 */
-	public Dimension getDimension();
 }

@@ -11,6 +11,7 @@ public class NumView implements MancalaView
 	private JButton p1Mancala;
 	private JButton p2Mancala;
 	private JPanel boardview;
+	private JFrame frame;
 	
 	/**
 	 * constructor for NumView
@@ -69,6 +70,13 @@ public class NumView implements MancalaView
 		labels.add(p2mancala, BorderLayout.WEST);
 		
 		boardview.add(labels, BorderLayout.CENTER);
+		
+		frame = new JFrame();
+		frame.setSize(700, 300);
+		frame.setTitle("Num View");
+		frame.add(boardview);
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 	
 	public void stateChanged(ChangeEvent event) 
@@ -104,24 +112,9 @@ public class NumView implements MancalaView
 	{
 		button.setText(data + "");
 	}
-
 	
-	/**
-	 * accessor to get the main panel to the view
-	 * @return the panel of this view
-	 */
-	public JPanel getPanel()
+	public void setVisible()
 	{
-		return boardview;
-	}
-	
-	
-	/**
-	 * accessor to get the dimension of this view
-	 * @return the dimension of this view
-	 */
-	public Dimension getDimension()
-	{
-		return new Dimension(700,200);
+		frame.setVisible(true);
 	}
 }

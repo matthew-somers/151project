@@ -77,6 +77,13 @@ public class IconView implements MancalaView
 
 		boardview.add(pits, BorderLayout.CENTER);
 		boardview.add(p2Mancala, BorderLayout.LINE_START);		
+		
+		JFrame frame = new JFrame();
+		frame.setSize(700, 300);
+		frame.setTitle("Icon View");
+		frame.add(boardview);
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 	
 	/**
@@ -141,5 +148,10 @@ public class IconView implements MancalaView
 	public Dimension getDimension()
 	{
 		return new Dimension(700,200);
+	}
+	
+	public void setVisible()
+	{
+		
 	}
 }

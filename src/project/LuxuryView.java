@@ -103,6 +103,13 @@ public class LuxuryView implements MancalaView
 
 		boardview.add(pits, BorderLayout.CENTER);
 		boardview.add(p2MancalaPanel, BorderLayout.PAGE_START);	
+		
+		JFrame frame = new JFrame();
+		frame.setSize(700, 300);
+		frame.setTitle("Luxury View");
+		frame.add(boardview);
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 	}
 	
@@ -154,23 +161,5 @@ public class LuxuryView implements MancalaView
 	//	}
 		
 
-	}
-	
-	/**
-	 * accessor to get the main panel to the view
-	 * @return the panel of this view
-	 */
-	public JPanel getPanel()
-	{
-		return boardview;
-	}
-	
-	/**
-	 * accessor to get the dimension of this view
-	 * @return the dimension of this view
-	 */
-	public Dimension getDimension()
-	{
-		return new Dimension(500,400);
 	}
 }

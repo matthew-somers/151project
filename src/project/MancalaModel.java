@@ -13,17 +13,11 @@ public class MancalaModel extends Observable
 	ArrayList<MancalaView> views;
 	public static final int PIT_SIZE = 6;
 
-	public MancalaModel()//int starting_stones)
+	public MancalaModel()
 	{
 		p1board = new int[PIT_SIZE+1]; // 6 pits, last is p1's mancala
 		p2board = new int[PIT_SIZE+1]; // 6 pits, last is p2's mancala
-/*
-		for (int i = 0; i < PIT_SIZE; i ++)
-		{
-			p1board[i] = starting_stones;
-			p2board[i] = starting_stones;
-		}
-	*/
+
 		views = new ArrayList<MancalaView>();
 	}
 	
@@ -48,7 +42,7 @@ public class MancalaModel extends Observable
 	public void addView(MancalaView mview)
 	{
 		views.add(mview);
-		//notifyViews();
+		notifyViews();
 	}
 	
 	public void makeMove(JButton buttonclicked)
@@ -71,5 +65,10 @@ public class MancalaModel extends Observable
 		{
 			view.stateChanged(new ChangeEvent(this));
 		}
+	}
+	
+	public boolean isEmpty()
+	{
+		return views.isEmpty();
 	}
 }
