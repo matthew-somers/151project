@@ -62,7 +62,7 @@ public class LuxuryView implements MancalaView {
         //fill up pits with buttons
         //pit2
         for (int i = 0; i < MancalaModel.PIT_SIZE; i++) {
-            GameButton p2butt = new GameButton(controller, "images/woodenround.png", 80, 80,2,i);
+            GameButton p2butt = new GameButton(controller, "images/woodenround.png", 80, 80,2,5-i);
             pits.add(p2butt);
         }
 

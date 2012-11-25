@@ -38,7 +38,7 @@ public class IconView implements MancalaView {
         //fill up pits with buttons
         //pit2
         for (int i = 0; i < MancalaModel.PIT_SIZE; i++) {
-            JButton p2butt = new GameButton(controller,"images/greenround",80,80,2,i);
+            JButton p2butt = new GameButton(controller,"images/greenround",80,80,2,5-i);
             pits.add(p2butt);
         }
 

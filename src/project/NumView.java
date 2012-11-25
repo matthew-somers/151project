@@ -32,7 +32,7 @@ public class NumView implements MancalaView {
         //fill up pits with buttons
         for (int i = 0; i < MancalaModel.PIT_SIZE; i++) {
             GameButton p1butt = new GameButton(controller,"",80,50,1,i);
-            GameButton p2butt = new GameButton(controller,"",80,50,2,i);
+            GameButton p2butt = new GameButton(controller,"",80,50,2,5-i);
             p1Pits.add(p1butt);
             p2Pits.add(p2butt);
         }

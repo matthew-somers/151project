@@ -8,6 +8,9 @@ import javax.swing.event.ChangeEvent;
 
 public class MancalaModel extends Observable {
 
+    int lastPlayer;
+    int lastCount;
+    int lastButtonId;
     private int[] p1board;
     private int[] p2board;
     ArrayList<MancalaView> views;
@@ -47,14 +50,55 @@ public class MancalaModel extends Observable {
     }
 
     public void makeMove(int playerId, int buttonId) {
+        int moreStones;
+        int currentPl;
+        int currentButton;
+        System.out.println("player id = "+playerId);
+        System.out.println("buttion id = "+buttonId);
+
         //game logic goes here
 
-        //test
-        p1board[0] = 9;
-        p2board[6] = 5; // p2 mancala
-        p2board[5] = 2;
-        p2board[0] = 1;
-        p1board[6] = 6;
+        // undo & set up check
+        if (lastPlayer == playerId) {
+            //undo move
+        }
+
+        // continue with normal move
+        lastPlayer = playerId;
+        lastButtonId = buttonId;
+
+        if (playerId == 1) {
+            lastCount = p1board[buttonId];
+            p1board[buttonId] = 0;
+        } else {
+            lastCount = p2board[buttonId];
+            p2board[buttonId] = 0;
+        }
+        moreStones = lastCount;
+        currentPl = lastPlayer;
+        currentButton = lastButtonId;
+        // move stone loop
+        while (moreStones > 0) {
+            currentButton++;
+            //mancala check
+            if (currentButton == 6) {
+                if (currentPl != lastPlayer) {
+                    continue;
+                }
+            }
+            // array swap check
+            if (currentButton == 7) {
+                currentPl = (currentPl == 1) ? 2 : 1;
+                currentButton = 0;
+            }
+            System.out.println("cp = "+currentPl+ " cb = "+currentButton);
+            if (currentPl == 1) {
+                p1board[currentButton] = p1board[currentButton] + 1;
+            } else {
+                p2board[currentButton] = p2board[currentButton] + 1;
+            }
+            moreStones--;
+        }
 
         notifyViews();
     }
@@ -68,5 +112,4 @@ public class MancalaModel extends Observable {
     public boolean isEmpty() {
         return views.isEmpty();
     }
-
 }
