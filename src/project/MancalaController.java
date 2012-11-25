@@ -13,6 +13,7 @@ public class MancalaController implements ActionListener
 		this.model = model;
 	}
 	
+    @Override
 	public void actionPerformed(ActionEvent e) 
 	{
 		model.makeMove( (JButton) e.getSource());
