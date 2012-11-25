@@ -46,7 +46,7 @@ public class MancalaModel extends Observable {
         notifyViews();
     }
 
-    public void makeMove(JButton buttonclicked) {
+    public void makeMove(int playerId, int buttonId) {
         //game logic goes here
 
         //test
@@ -68,4 +68,5 @@ public class MancalaModel extends Observable {
     public boolean isEmpty() {
         return views.isEmpty();
     }
+
 }

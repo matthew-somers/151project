@@ -16,7 +16,8 @@ public class MancalaController implements ActionListener
     @Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		model.makeMove( (JButton) e.getSource());
+            GameButton gb = (GameButton) e.getSource();
+		model.makeMove(gb.getPlayerId(),gb.getButtonId());
 	}
 
 }

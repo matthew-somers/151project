@@ -8,8 +8,8 @@ public class NumView implements MancalaView {
 
     private JPanel p1Pits;
     private JPanel p2Pits;
-    private JButton p1Mancala;
-    private JButton p2Mancala;
+    private GameButton p1Mancala;
+    private GameButton p2Mancala;
     private JPanel boardview;
     private JFrame frame;
 
@@ -22,10 +22,8 @@ public class NumView implements MancalaView {
         boardview = new JPanel();
         p1Pits = new JPanel();
         p2Pits = new JPanel();
-        p1Mancala = new JButton();
-        p2Mancala = new JButton();
-        p1Mancala.setPreferredSize(new Dimension(100, 150));
-        p2Mancala.setPreferredSize(new Dimension(100, 150));
+        p1Mancala = new GameButton(null, "", 100, 150,1,6);
+        p2Mancala = new GameButton(null, "", 100, 150,2,6);
 
         boardview.setLayout(new BorderLayout());
         p1Pits.setLayout(new FlowLayout());
@@ -33,13 +31,8 @@ public class NumView implements MancalaView {
 
         //fill up pits with buttons
         for (int i = 0; i < MancalaModel.PIT_SIZE; i++) {
-            JButton p1butt = new JButton();
-            p1butt.setPreferredSize(new Dimension(80, 50));
-            JButton p2butt = new JButton();
-            p2butt.setPreferredSize(new Dimension(80, 50));
-
-            p1butt.addActionListener(controller);
-            p2butt.addActionListener(controller);
+            GameButton p1butt = new GameButton(controller,"",80,50,1,i);
+            GameButton p2butt = new GameButton(controller,"",80,50,2,i);
             p1Pits.add(p1butt);
             p2Pits.add(p2butt);
         }
@@ -114,4 +107,5 @@ public class NumView implements MancalaView {
     public void setVisible() {
         frame.setVisible(true);
     }
+
 }

@@ -16,8 +16,8 @@ public class LuxuryView implements MancalaView {
     private JPanel pits;// the panel to contain both p1Pits and p2Pits
     private JPanel p1MancalaPanel;
     private JPanel p2MancalaPanel;
-    private JButton p1Mancala;
-    private JButton p2Mancala;
+    private GameButton p1Mancala;
+    private GameButton p2Mancala;
     private BackgroundPanel boardview;
 
     /**
@@ -53,14 +53,8 @@ public class LuxuryView implements MancalaView {
         pits = new BackgroundPanel();
         pits.setLayout(new GridLayout(2, 6));
 
-        p1Mancala = new JButton(new ImageIcon("images/woodenMancala.png"));
-        p1Mancala.setBorder(null);
-        p1Mancala.setHorizontalTextPosition(JButton.CENTER);
-        p1Mancala.setVerticalTextPosition(JButton.CENTER);
-        p2Mancala = new JButton(new ImageIcon("images/woodenMancala.png"));
-        p2Mancala.setBorder(null);
-        p2Mancala.setHorizontalTextPosition(JButton.CENTER);
-        p2Mancala.setVerticalTextPosition(JButton.CENTER);
+        p1Mancala = new GameButton(controller, "images/woodenMancala.png", 0, 0,1,6);
+        p2Mancala = new GameButton(controller, "images/woodenMancala.png", 0, 0,2,6);
 
         boardview.setLayout(new BorderLayout());
 
@@ -68,26 +62,13 @@ public class LuxuryView implements MancalaView {
         //fill up pits with buttons
         //pit2
         for (int i = 0; i < MancalaModel.PIT_SIZE; i++) {
-            JButton p2butt = new JButton(new ImageIcon("images/woodenround.png"));
-            p2butt.setHorizontalTextPosition(JButton.CENTER);
-            p2butt.setVerticalTextPosition(JButton.CENTER);
-            p2butt.setPreferredSize(new Dimension(80, 80));
-            p2butt.setBorder(null);
-            p2butt.addActionListener(controller);
-
+            GameButton p2butt = new GameButton(controller, "images/woodenround.png", 80, 80,2,i);
             pits.add(p2butt);
-
-
         }
 
         //pit1
         for (int i = 0; i < MancalaModel.PIT_SIZE; i++) {
-            JButton p1butt = new JButton(new ImageIcon("images/woodenround.png"));
-            p1butt.setPreferredSize(new Dimension(80, 80));
-            p1butt.setBorder(null);
-            p1butt.setHorizontalTextPosition(JButton.CENTER);
-            p1butt.setVerticalTextPosition(JButton.CENTER);
-            p1butt.addActionListener(controller);
+            GameButton p1butt = new GameButton(controller, "images/woodenround.png", 80, 80,1,i);
             pits.add(p1butt);
         }
 
@@ -162,4 +143,5 @@ public class LuxuryView implements MancalaView {
 
 
     }
+
 }

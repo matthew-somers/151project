@@ -29,14 +29,8 @@ public class IconView implements MancalaView {
         pits = new JPanel();
         pits.setLayout(new GridLayout(2, 6));
 
-        p1Mancala = new JButton(new ImageIcon("images/bluemacala.png"));
-        p1Mancala.setBorder(null);
-        p1Mancala.setHorizontalTextPosition(JButton.CENTER);
-        p1Mancala.setVerticalTextPosition(JButton.CENTER);
-        p2Mancala = new JButton(new ImageIcon("images/greenmacala.png"));
-        p2Mancala.setBorder(null);
-        p2Mancala.setHorizontalTextPosition(JButton.CENTER);
-        p2Mancala.setVerticalTextPosition(JButton.CENTER);
+        p1Mancala = new GameButton(null,"images/bluemacala.png",0,0,1,6);
+        p2Mancala = new GameButton(null,"images/greenmacala.png",0,0,1,6);
 
         boardview.setLayout(new BorderLayout());
 
@@ -44,24 +38,13 @@ public class IconView implements MancalaView {
         //fill up pits with buttons
         //pit2
         for (int i = 0; i < MancalaModel.PIT_SIZE; i++) {
-
-            JButton p2butt = new JButton(new ImageIcon("images/greenround.png"));
-            p2butt.setPreferredSize(new Dimension(80, 80));
-            p2butt.setBorder(null);
-            p2butt.setHorizontalTextPosition(JButton.CENTER);
-            p2butt.setVerticalTextPosition(JButton.CENTER);
-            p2butt.addActionListener(controller);
+            JButton p2butt = new GameButton(controller,"images/greenround",80,80,2,i);
             pits.add(p2butt);
         }
 
         //pit1
         for (int i = 0; i < MancalaModel.PIT_SIZE; i++) {
-            JButton p1butt = new JButton(new ImageIcon("images/blueround.png"));
-            p1butt.setPreferredSize(new Dimension(80, 80));
-            p1butt.setBorder(null);
-            p1butt.addActionListener(controller);
-            p1butt.setHorizontalTextPosition(JButton.CENTER);
-            p1butt.setVerticalTextPosition(JButton.CENTER);
+            JButton p1butt = new GameButton(controller,"images/blueround.png",80,80,1,i);
             pits.add(p1butt);
         }
 
@@ -100,14 +83,12 @@ public class IconView implements MancalaView {
         for (int i = 5, j = 0; i >= 0; i--, j++) {
             JButton jb2 = (JButton) pitComponents[i];
             updateButton(jb2, p2board[j]);
-
         }
 
         //pits 1
         for (int i = 6; i < 12; i++) {
             JButton jb1 = (JButton) pitComponents[i];
             updateButton(jb1, p2board[i % 6]);
-
         }
         updateButton(p1Mancala, p1board[MancalaModel.PIT_SIZE]);
         updateButton(p2Mancala, p2board[MancalaModel.PIT_SIZE]);
@@ -147,4 +128,5 @@ public class IconView implements MancalaView {
 
     public void setVisible() {
     }
+
 }
