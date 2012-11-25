@@ -1,4 +1,6 @@
 package project;
+// todo: last pit selected changes text to "undo" clear previous "undo" pit
+//       do for all  views (Wesley)
 
 import java.awt.*;
 import javax.swing.*;

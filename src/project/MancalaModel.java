@@ -1,6 +1,7 @@
 package project;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Observable;
 
 import javax.swing.JButton;
@@ -88,7 +89,9 @@ public class MancalaModel extends Observable {
             }
             // array swap check
             if (currentButton == 7) {
-                currentPl = (currentPl == 1) ? 2 : 1;
+                //currentPl = (currentPl == 1) ? 2 : 1;
+                if(currentPl==1){currentPl=2;}
+                else{currentPl=1;}
                 currentButton = 0;
             }
             System.out.println("cp = "+currentPl+ " cb = "+currentButton);
@@ -97,6 +100,7 @@ public class MancalaModel extends Observable {
             } else {
                 p2board[currentButton] = p2board[currentButton] + 1;
             }
+            System.out.println("1="+Arrays.toString(p1board) + " 2=" + Arrays.toString(p2board));
             moreStones--;
         }
 
