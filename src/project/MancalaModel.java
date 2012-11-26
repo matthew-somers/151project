@@ -1,5 +1,8 @@
 package project;
 
+// todo: player control tracking and free move from Mancala or undo
+//       Gentlemen's rules....
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
@@ -15,15 +18,21 @@ public class MancalaModel extends Observable {
     private int[] p1board;
     private int[] p2board;
     private int[] reverseIndex; // reverse lookup index
+    private int[] undoP1board;
+    private int[] undoP2board;
     ArrayList<MancalaView> views;
     public static final int PIT_SIZE = 6;
     Boolean gameOver;
+    private boolean freemove;
+    private int undoCount;
 
     public MancalaModel() {
         p1board = new int[PIT_SIZE + 1]; // 6 pits, last is p1's mancala
         p2board = new int[PIT_SIZE + 1]; // 6 pits, last is p2's mancala
         reverseIndex = new int[PIT_SIZE + 1]; // reverse index across the game board
-
+        undoP1board = new int[PIT_SIZE + 1];//for copying the board state
+        undoP2board = new int[PIT_SIZE + 1];//for copying the board state
+        undoCount=0;
         for (int i = 0; i < PIT_SIZE; i++) {
             reverseIndex[i] = (PIT_SIZE) - i - 1;
         }
@@ -65,12 +74,25 @@ public class MancalaModel extends Observable {
         System.out.println("buttion id = " + buttonId);
 
         //game logic goes here
-
         // undo & set up check
-        if (lastPlayer == playerId) {
+        if (lastPlayer == playerId && lastButtonId == buttonId && 
+                ((lastPlayer ==1 && p1board[buttonId]==0)|| (lastPlayer==2 && p2board[buttonId]==0))){
             //undo move
+            if(undoCount<3){
+            System.arraycopy(undoP1board, 0, p1board, 0, p1board.length);
+            System.arraycopy(undoP2board, 0, p2board, 0, p2board.length);
+            }
+            undoCount++;
+             notifyViews();
+            return;
         }
-
+        // save current position and reset undo count
+        System.arraycopy(p1board, 0, undoP1board, 0, p1board.length);
+        System.arraycopy(p2board, 0, undoP2board, 0, p2board.length);
+        if (lastPlayer != playerId) {
+            undoCount = 0;
+        }
+        
         // continue with normal move
         lastPlayer = playerId;
         lastButtonId = buttonId;
@@ -110,22 +132,22 @@ public class MancalaModel extends Observable {
             } else {
                 p2board[currentButton] = p2board[currentButton] + 1;
             }
-           
+
             moreStones--;
         }
         //System.out.println("Reverse:" + Arrays.toString(reverseIndex));
-        System.out.println("PL="+currentPl+"CB="+currentButton+" 1=" + Arrays.toString(p1board) + " 2=" + Arrays.toString(p2board));
+        //System.out.println("PL=" + currentPl + "CB=" + currentButton + " 1=" + Arrays.toString(p1board) + " 2=" + Arrays.toString(p2board));
         if ((currentPl == lastPlayer) && (currentButton < PIT_SIZE)) {
             // condition checks if we are in correct state
             //  finished on move players side of board
             //    and not in mancala
-           checkCaptureMove(currentPl,currentButton);
+            checkCaptureMove(currentPl, currentButton);
         }
-        
+
         checkWinningMove();
-        
+
         // not checking if last move was mancala and giving player another turn
-        
+
         notifyViews();
     }
 
@@ -151,38 +173,36 @@ public class MancalaModel extends Observable {
     }
 
     private void checkCaptureMove(int player, int pit) {
-        // check if this last pit has 1 stone. If so then check
-        //  opposite pit (use reverseIndex[pit]) to see if it
-        //  has any stones... if so move both sets of stones to 
-        //  players mancala (PIT_SZIE)
+
         if (player == 1) {
-            // player 1
+
             if (p1board[pit] == 1) {
-                // placed stone in empty pit
+
                 if (p2board[reverseIndex[pit]] > 0) {
-                    //move all stones to p1 mancala
-                    p1board[PIT_SIZE]+=1+p2board[reverseIndex[pit]];
-                    p1board[pit]=0;
-                    p2board[reverseIndex[pit]]=0;
-                    
-                    
+
+                    p1board[PIT_SIZE] += 1 + p2board[reverseIndex[pit]];
+                    p1board[pit] = 0;
+                    p2board[reverseIndex[pit]] = 0;
+
+
                 }
             }
-        } else {if (player == 2) {
-            // player 1
-            if (p2board[pit] == 1) {
-                // placed stone in empty pit
-                if (p1board[reverseIndex[pit]] > 0) {
-                    //move all stones to p1 mancala
-                    p2board[PIT_SIZE]+=1+p1board[reverseIndex[pit]];
-                    p2board[pit]=0;
-                    p1board[reverseIndex[pit]]=0;
-                    
-                    
+        } else {
+            if (player == 2) {
+
+                if (p2board[pit] == 1) {
+
+                    if (p1board[reverseIndex[pit]] > 0) {
+
+                        p2board[PIT_SIZE] += 1 + p1board[reverseIndex[pit]];
+                        p2board[pit] = 0;
+                        p1board[reverseIndex[pit]] = 0;
+
+
+                    }
                 }
             }
-        }
-            // player two ... same as above
+
         }
     }
 
