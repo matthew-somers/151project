@@ -14,6 +14,8 @@ import javax.swing.event.ChangeEvent;
 public class LuxuryView implements MancalaView {
 
     private JPanel pits;// the panel to contain both p1Pits and p2Pits
+    private JPanel pit1;
+    private JPanel pit2;
     private JPanel p1MancalaPanel;
     private JPanel p2MancalaPanel;
     private GameButton p1Mancala;
@@ -50,8 +52,14 @@ public class LuxuryView implements MancalaView {
         p2MancalaPanel = new BackgroundPanel();
         p2MancalaPanel.setLayout(new FlowLayout());
         boardview = new BackgroundPanel();
-        pits = new BackgroundPanel();
-        pits.setLayout(new GridLayout(2, 6));
+        pits = new JPanel(new BorderLayout());
+        pit1 = new BackgroundPanel();
+        pit1.setLayout(new GridLayout(0,6));
+        pit1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        pit2 = new BackgroundPanel();
+        pit2.setLayout(new GridLayout(0,6));
+        pit2.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        
 
         p1Mancala = new GameButton(controller, "images/woodenMancala.png", 0, 0,1,6);
         p2Mancala = new GameButton(controller, "images/woodenMancala.png", 0, 0,2,6);
@@ -61,15 +69,16 @@ public class LuxuryView implements MancalaView {
 
         //fill up pits with buttons
         //pit2
-        for (int i = 0; i < MancalaModel.PIT_SIZE; i++) {
+        for (int i = 0; i < MancalaModel.PIT_SIZE; i++) 
+        {
             GameButton p2butt = new GameButton(controller, "images/woodenround.png", 80, 80,2,5-i);
-            pits.add(p2butt);
+            pit2.add(p2butt);
         }
 
         //pit1
         for (int i = 0; i < MancalaModel.PIT_SIZE; i++) {
             GameButton p1butt = new GameButton(controller, "images/woodenround.png", 80, 80,1,i);
-            pits.add(p1butt);
+            pit1.add(p1butt);
         }
 
         //p1Mancala.setText();
@@ -77,16 +86,20 @@ public class LuxuryView implements MancalaView {
 
         p1Mancala.setPreferredSize(new Dimension(300, 100));
         p2Mancala.setPreferredSize(new Dimension(300, 100));
-
+        
+        pits.add(pit1, BorderLayout.SOUTH);
+        pits.add(pit2, BorderLayout.NORTH);
         p1MancalaPanel.add(p1Mancala);
         p2MancalaPanel.add(p2Mancala);
         boardview.add(p1MancalaPanel, BorderLayout.PAGE_END);
-
+        
+        
         boardview.add(pits, BorderLayout.CENTER);
         boardview.add(p2MancalaPanel, BorderLayout.PAGE_START);
 
         JFrame frame = new JFrame();
-        frame.setSize(700, 300);
+        frame.setSize(700, 402);
+        frame.setResizable(false);
         frame.setTitle("Luxury View");
         frame.add(boardview);
         frame.setVisible(true);
@@ -104,20 +117,21 @@ public class LuxuryView implements MancalaView {
         MancalaModel model = (MancalaModel) event.getSource();
         int[] p1board = model.getp1board();
         int[] p2board = model.getp2board();
-        Component[] pitComponents = pits.getComponents();
-
-        //pits 2
-        for (int i = 5, j = 0; i >= 0; i--, j++) {
-            JButton jb2 = (JButton) pitComponents[i];
-//	jb2.setLayout(new GridLayout(10,10));			
-            updateButton(jb2, p2board[j]);
-        }
+        Component[] pit1Components = pit1.getComponents();
+        Component[] pit2Components = pit2.getComponents();
 
         //pits 1
-        for (int i = 6; i < 12; i++) {
-            JButton jb1 = (JButton) pitComponents[i];
-            updateButton(jb1, p2board[i % 6]);
+        for (int i = 0; i < 6; i++)
+        {
+            JButton jb1 = (JButton) pit1Components[i];
+            updateButton(jb1, p1board[i]);
+        }
 
+        //pits 2
+        for (int i = 0; i < 6; i++) 
+        {
+            JButton jb2 = (JButton) pit2Components[i];
+            updateButton(jb2, p2board[i]);
         }
         updateButton(p1Mancala, p1board[MancalaModel.PIT_SIZE]);
         updateButton(p2Mancala, p2board[MancalaModel.PIT_SIZE]);
@@ -130,17 +144,21 @@ public class LuxuryView implements MancalaView {
      * @param int the data index to be changed
      */
     @Override
-    public void updateButton(JButton button, int data) {
-        //update button with new icons instead of a number?
-        button.setText(data + "");
-        button.setBorder(null);
-        //System.out.println(data);
-        //for (int z = 0; z < data; z++)
-        //{
-        //		button.add(new JLabel(new ImageIcon("images/stone.png")));
-        //		System.out.println("add");
-        //	}
-
+    public void updateButton(JButton button, int data)
+    {
+    	String s = "";
+    	int count = 0;
+    	for (int i = 0; i < data; i++)
+    	{
+    		s += "o";
+    		count++;
+    		if(count >= 10)
+    			s = "O" + "x" + count;
+    	}
+    	String htmlString = "<html> <font color=#FFFF00  >" + s + "</font>";
+    		     button.setText(htmlString);
+    	
+    	button.setBorder(null);
 
     }
 

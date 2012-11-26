@@ -23,9 +23,7 @@ public class MenuFrame extends JFrame {
         setTitle("Mancala");
         setLayout(new FlowLayout());
         setSize(new Dimension(200, 200));
-        setResizable(false);
-        setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
 
         JButton simpleViewButton = new JButton("SimpleView");
@@ -74,6 +72,9 @@ public class MenuFrame extends JFrame {
         this.add(simpleViewButton);
         this.add(IconViewButton);
         this.add(LuxuryViewButton);
+        setResizable(false);
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public void setStartingStones() {

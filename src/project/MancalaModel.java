@@ -37,7 +37,7 @@ public class MancalaModel extends Observable {
             reverseIndex[i] = (PIT_SIZE) - i - 1;
         }
         reverseIndex[PIT_SIZE] = PIT_SIZE;
-        views = new ArrayList<>();
+        views = new ArrayList<MancalaView>();
         gameOver = false;
     }
 

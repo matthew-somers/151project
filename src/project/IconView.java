@@ -14,6 +14,9 @@ import javax.swing.event.ChangeEvent;
 public class IconView implements MancalaView {
 
     private JPanel pits;// the panel to contain both p1Pits and p2Pits
+    private JPanel pit1;
+    private JPanel pit2;
+    
     private JButton p1Mancala;
     private JButton p2Mancala;
     private JPanel boardview;
@@ -26,26 +29,30 @@ public class IconView implements MancalaView {
     public IconView(MancalaController controller) {
 
         boardview = new JPanel();
-        pits = new JPanel();
-        pits.setLayout(new GridLayout(2, 6));
+        pits = new JPanel(new BorderLayout());
+        pit1 = new JPanel(new GridLayout(0,6));
+        pit1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 
-        p1Mancala = new GameButton(null,"images/bluemacala.png",0,0,1,6);
-        p2Mancala = new GameButton(null,"images/greenmacala.png",0,0,1,6);
+        pit2 = new JPanel(new GridLayout(0,6));
+        pit2.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+
+        p1Mancala = new GameButton(null,"images/greenmacala.png",0,0,1,6);
+        p2Mancala = new GameButton(null,"images/bluemacala.png",0,0,1,6);
 
         boardview.setLayout(new BorderLayout());
 
 
         //fill up pits with buttons
-        //pit2
-        for (int i = 0; i < MancalaModel.PIT_SIZE; i++) {
-            JButton p2butt = new GameButton(controller,"images/greenround",80,80,2,5-i);
-            pits.add(p2butt);
-        }
-
         //pit1
         for (int i = 0; i < MancalaModel.PIT_SIZE; i++) {
-            JButton p1butt = new GameButton(controller,"images/blueround.png",80,80,1,i);
-            pits.add(p1butt);
+            JButton p1butt = new GameButton(controller,"images/greenround.png",80,80,2,5-i);
+            pit1.add(p1butt);
+        }
+
+        //pit2
+        for (int i = 0; i < MancalaModel.PIT_SIZE; i++) {
+            JButton p2butt = new GameButton(controller,"images/blueround.png",80,80,1,i);
+            pit2.add(p2butt);
         }
 
         //p1Mancala.setText();
@@ -53,7 +60,11 @@ public class IconView implements MancalaView {
 
         p1Mancala.setPreferredSize(new Dimension(100, 120));
         p2Mancala.setPreferredSize(new Dimension(100, 120));
-
+        
+        
+        pits.add(pit1, BorderLayout.SOUTH);
+        pits.add(pit2, BorderLayout.NORTH);
+        
         boardview.add(p1Mancala, BorderLayout.LINE_END);
 
         boardview.add(pits, BorderLayout.CENTER);
@@ -77,18 +88,21 @@ public class IconView implements MancalaView {
         MancalaModel model = (MancalaModel) event.getSource();
         int[] p1board = model.getp1board();
         int[] p2board = model.getp2board();
-        Component[] pitComponents = pits.getComponents();
-
-        //pits 2
-        for (int i = 5, j = 0; i >= 0; i--, j++) {
-            JButton jb2 = (JButton) pitComponents[i];
-            updateButton(jb2, p2board[j]);
-        }
+        Component[] pit1Components = pit1.getComponents();
+        Component[] pit2Components = pit2.getComponents();
 
         //pits 1
-        for (int i = 6; i < 12; i++) {
-            JButton jb1 = (JButton) pitComponents[i];
-            updateButton(jb1, p2board[i % 6]);
+        for (int i = 0; i < 6; i++)
+        {
+            JButton jb1 = (JButton) pit1Components[i];
+            updateButton(jb1, p1board[i]);
+        }
+
+        //pits 2
+        for (int i = 0; i < 6; i++) 
+        {
+            JButton jb2 = (JButton) pit2Components[i];
+            updateButton(jb2, p2board[i]);
         }
         updateButton(p1Mancala, p1board[MancalaModel.PIT_SIZE]);
         updateButton(p2Mancala, p2board[MancalaModel.PIT_SIZE]);
@@ -101,11 +115,22 @@ public class IconView implements MancalaView {
      * @param int the data index to be changed
      */
     @Override
-    public void updateButton(JButton button, int data) {
-        //update button with new icons instead of a number?
-        //update button with new icons instead of a number?
-        button.setText(data + "");
-        button.setBorder(null);
+    public void updateButton(JButton button, int data)
+    {
+    	String s = "";
+    	int count = 0;
+    	for (int i = 0; i < data; i++)
+    	{
+    		s += "o";
+    		count++;
+    		if(count >= 10)
+    			s = "O" + "x" + count;
+    	}
+    	String htmlString = "<html> <font color=#FFFF00  >" + s + "</font>";
+    		     button.setText(htmlString);
+    	
+    	button.setBorder(null);
+
     }
 
     /**
