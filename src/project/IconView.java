@@ -37,7 +37,7 @@ public class IconView implements MancalaView {
         pit2.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 
         p1Mancala = new GameButton(null,"images/greenmacala.png",0,0,1,6);
-        p2Mancala = new GameButton(null,"images/bluemacala.png",0,0,1,6);
+        p2Mancala = new GameButton(null,"images/bluemacala.png",0,0,2,6);
 
         boardview.setLayout(new BorderLayout());
 
@@ -45,13 +45,13 @@ public class IconView implements MancalaView {
         //fill up pits with buttons
         //pit1
         for (int i = 0; i < MancalaModel.PIT_SIZE; i++) {
-            JButton p1butt = new GameButton(controller,"images/greenround.png",80,80,2,5-i);
+            JButton p1butt = new GameButton(controller,"images/greenround.png",80,80,1,i);
             pit1.add(p1butt);
         }
 
         //pit2
         for (int i = 0; i < MancalaModel.PIT_SIZE; i++) {
-            JButton p2butt = new GameButton(controller,"images/blueround.png",80,80,1,i);
+            JButton p2butt = new GameButton(controller,"images/blueround.png",80,80,2,i);
             pit2.add(p2butt);
         }
 

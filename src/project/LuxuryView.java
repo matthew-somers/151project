@@ -61,8 +61,8 @@ public class LuxuryView implements MancalaView {
         pit2.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         
 
-        p1Mancala = new GameButton(controller, "images/woodenMancala.png", 0, 0,1,6);
-        p2Mancala = new GameButton(controller, "images/woodenMancala.png", 0, 0,2,6);
+        p1Mancala = new GameButton(null, "images/woodenMancala.png", 0, 0,1,6);
+        p2Mancala = new GameButton(null, "images/woodenMancala.png", 0, 0,2,6);
 
         boardview.setLayout(new BorderLayout());
 
@@ -71,7 +71,7 @@ public class LuxuryView implements MancalaView {
         //pit2
         for (int i = 0; i < MancalaModel.PIT_SIZE; i++) 
         {
-            GameButton p2butt = new GameButton(controller, "images/woodenround.png", 80, 80,2,5-i);
+            GameButton p2butt = new GameButton(controller, "images/woodenround.png", 80, 80,2,i);
             pit2.add(p2butt);
         }
 
@@ -98,7 +98,7 @@ public class LuxuryView implements MancalaView {
         boardview.add(p2MancalaPanel, BorderLayout.PAGE_START);
 
         JFrame frame = new JFrame();
-        frame.setSize(700, 402);
+        frame.setSize(650, 402);
         frame.setResizable(false);
         frame.setTitle("Luxury View");
         frame.add(boardview);
