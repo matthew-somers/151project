@@ -152,8 +152,9 @@ public class LuxuryView implements MancalaView {
     	{
     		s += "o";
     		count++;
-    		if(count >= 10)
-    			s = "O" + "x" + count;
+    		if(count >= 10) {
+                s = "O" + "x" + count;
+            }
     	}
     	String htmlString = "<html> <font color=#FFFF00  >" + s + "</font>";
     		     button.setText(htmlString);
