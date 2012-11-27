@@ -6,6 +6,10 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 
+/**
+ *
+ * @author jory
+ */
 public class NumView implements MancalaView {
 
     private JPanel p1Pits;
@@ -106,6 +110,9 @@ public class NumView implements MancalaView {
         button.setText(data + "");
     }
 
+    /**
+     *
+     */
     public void setVisible() {
         frame.setVisible(true);
     }

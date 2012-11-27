@@ -10,6 +10,10 @@ import java.util.Observable;
 import javax.swing.JButton;
 import javax.swing.event.ChangeEvent;
 
+/**
+ *
+ * @author jory
+ */
 public class MancalaModel extends Observable {
 
     int lastPlayer;
@@ -21,11 +25,17 @@ public class MancalaModel extends Observable {
     private int[] undoP1board;
     private int[] undoP2board;
     ArrayList<MancalaView> views;
+    /**
+     *
+     */
     public static final int PIT_SIZE = 6;
     Boolean gameOver;
     private boolean freemove;
     private int undoCount;
 
+    /**
+     *
+     */
     public MancalaModel() {
         p1board = new int[PIT_SIZE + 1]; // 6 pits, last is p1's mancala
         p2board = new int[PIT_SIZE + 1]; // 6 pits, last is p2's mancala
@@ -41,10 +51,18 @@ public class MancalaModel extends Observable {
         gameOver = false;
     }
 
+    /**
+     *
+     * @return
+     */
     public int[] getp1board() {
         return p1board;
     }
 
+    /**
+     *
+     * @return
+     */
     public int[] getp2board() {
         return p2board;
     }
@@ -61,11 +79,20 @@ public class MancalaModel extends Observable {
         notifyViews();
     }
 
+    /**
+     *
+     * @param mview
+     */
     public void addView(MancalaView mview) {
         views.add(mview);
         notifyViews();
     }
 
+    /**
+     *
+     * @param playerId
+     * @param buttonId
+     */
     public void makeMove(int playerId, int buttonId) {
         int moreStones;
         int currentPl;
@@ -206,16 +233,27 @@ public class MancalaModel extends Observable {
         }
     }
 
+    /**
+     *
+     */
     public void notifyViews() {
         for (MancalaView view : views) {
             view.stateChanged(new ChangeEvent(this));
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isEmpty() {
         return views.isEmpty();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isDone() {
         return gameOver;
     }

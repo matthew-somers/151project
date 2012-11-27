@@ -10,12 +10,21 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+/**
+ *
+ * @author jory
+ */
 public class MenuFrame extends JFrame {
 
     private MancalaModel model;
     private MancalaController controller;
     private int numStones;
 
+    /**
+     *
+     * @param model2
+     * @param controller2
+     */
     public MenuFrame(MancalaModel model2, final MancalaController controller2) {
         model = model2;
         controller = controller2;
@@ -77,6 +86,9 @@ public class MenuFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    /**
+     *
+     */
     public void setStartingStones() {
         Object[] possibleValues = {"3", "4"};
         Object selectedValue = JOptionPane.showInputDialog(this,

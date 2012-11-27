@@ -152,6 +152,9 @@ public class IconView implements MancalaView {
         return new Dimension(700, 200);
     }
 
+    /**
+     *
+     */
     public void setVisible() {
     }
 

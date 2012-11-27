@@ -14,7 +14,13 @@ import javax.swing.JButton;
  */
 public class GameButton extends JButton {
 
+    /**
+     *
+     */
     protected int playerId; // 1 or 2
+    /**
+     *
+     */
     protected int buttonId; // 0-5 field 6 Mancala
 
     GameButton(MancalaController ctlr, String iconName, int width, int height, int playerid, int button) {
