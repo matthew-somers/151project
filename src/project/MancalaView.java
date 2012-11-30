@@ -25,4 +25,6 @@ public interface MancalaView {
      * @param data
      */
     public void updateButton(JButton button, int data);
+    
+    public String getPitTextColor();
 }

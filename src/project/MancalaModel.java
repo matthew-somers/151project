@@ -2,7 +2,6 @@ package project;
 
 // todo: player control tracking and free move from Mancala or undo
 //       Gentlemen's rules....
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
@@ -17,7 +16,6 @@ import javax.swing.event.ChangeEvent;
 public class MancalaModel extends Observable {
 
     int lastPlayer;
-    int lastCount;
     int lastButtonId;
     private int[] p1board;
     private int[] p2board;
@@ -29,9 +27,11 @@ public class MancalaModel extends Observable {
      *
      */
     public static final int PIT_SIZE = 6;
-    Boolean gameOver;
-    private boolean freemove;
+    private boolean gameOver;
+    private boolean freemove; // undo type free move only
+    
     private int undoCount;
+    private boolean legalMove;
 
     /**
      *
@@ -42,13 +42,16 @@ public class MancalaModel extends Observable {
         reverseIndex = new int[PIT_SIZE + 1]; // reverse index across the game board
         undoP1board = new int[PIT_SIZE + 1];//for copying the board state
         undoP2board = new int[PIT_SIZE + 1];//for copying the board state
-        undoCount=0;
+        undoCount = 0;
         for (int i = 0; i < PIT_SIZE; i++) {
             reverseIndex[i] = (PIT_SIZE) - i - 1;
         }
         reverseIndex[PIT_SIZE] = PIT_SIZE;
         views = new ArrayList<MancalaView>();
         gameOver = false;
+        legalMove = false;
+        // randomly set last player
+        lastPlayer = 1 + (int) (Math.floor(Math.random() * 2.0));
     }
 
     /**
@@ -97,41 +100,75 @@ public class MancalaModel extends Observable {
         int moreStones;
         int currentPl;
         int currentButton;
-        System.out.println("player id = " + playerId);
-        System.out.println("buttion id = " + buttonId);
+
+        legalMove = false;
+        // saftey checks for bad interfaces
+
+        // ignore moves once game is over
+        if (gameOver) {
+            return;
+        }
+
+        // ignore moves of empty pits
+        if (lastPlayer != playerId
+                && ((playerId == 1 && p1board[buttonId] == 0)
+                || (playerId == 2 && p2board[buttonId] == 0))) {
+            return;
+        }
+
+        // really bad data
+        if (playerId > 2 || playerId < 1) {
+            // program error there are only 2 players
+            return;
+        }
+        if (buttonId > PIT_SIZE || buttonId < 0) {
+            // unknown pit
+            return;
+        }
+        // end saftey checks
+
+        //System.out.println("player id = " + playerId);
+        //System.out.println("buttion id = " + buttonId);
 
         //game logic goes here
         // undo & set up check
-        if (lastPlayer == playerId && lastButtonId == buttonId && 
-                ((lastPlayer ==1 && p1board[buttonId]==0)|| (lastPlayer==2 && p2board[buttonId]==0))){
-            //undo move
-            if(undoCount<3){
-            System.arraycopy(undoP1board, 0, p1board, 0, p1board.length);
-            System.arraycopy(undoP2board, 0, p2board, 0, p2board.length);
+        if (lastPlayer == playerId) {
+            if (lastButtonId == buttonId
+                    && ((lastPlayer == 1 && p1board[buttonId] == 0) || (lastPlayer == 2 && p2board[buttonId] == 0))) {
+                //undo move
+                if (undoCount < 3) {
+                    System.arraycopy(undoP1board, 0, p1board, 0, p1board.length);
+                    System.arraycopy(undoP2board, 0, p2board, 0, p2board.length);
+                    undoCount++;
+                    resetLastPlayer(); // give player back their turn
+                    notifyViews();
+                    freemove = true;
+                }
+                return;
+            } else {
+                // player cheated and clicked twice not an undo move
+                //  ignore them
+                return;
             }
-            undoCount++;
-             notifyViews();
-            return;
         }
         // save current position and reset undo count
         System.arraycopy(p1board, 0, undoP1board, 0, p1board.length);
         System.arraycopy(p2board, 0, undoP2board, 0, p2board.length);
-        if (lastPlayer != playerId) {
+        if (!freemove) {
             undoCount = 0;
         }
-        
+        freemove = false;
         // continue with normal move
         lastPlayer = playerId;
         lastButtonId = buttonId;
 
         if (playerId == 1) {
-            lastCount = p1board[buttonId];
+            moreStones = p1board[buttonId];
             p1board[buttonId] = 0;
         } else {
-            lastCount = p2board[buttonId];
+            moreStones = p2board[buttonId];
             p2board[buttonId] = 0;
         }
-        moreStones = lastCount;
         currentPl = lastPlayer;
         currentButton = lastButtonId;
         // move stone loop
@@ -173,9 +210,14 @@ public class MancalaModel extends Observable {
 
         checkWinningMove();
 
-        // not checking if last move was mancala and giving player another turn
+        if (!gameOver && (currentPl == lastPlayer && currentButton == PIT_SIZE)) {
+            resetLastPlayer(); // free turn
+        }
 
         notifyViews();
+        if (!gameOver) {
+            legalMove = true;
+        }
     }
 
     private void checkWinningMove() {
@@ -200,36 +242,24 @@ public class MancalaModel extends Observable {
     }
 
     private void checkCaptureMove(int player, int pit) {
-
         if (player == 1) {
-
             if (p1board[pit] == 1) {
-
                 if (p2board[reverseIndex[pit]] > 0) {
-
                     p1board[PIT_SIZE] += 1 + p2board[reverseIndex[pit]];
                     p1board[pit] = 0;
                     p2board[reverseIndex[pit]] = 0;
-
-
                 }
             }
         } else {
             if (player == 2) {
-
                 if (p2board[pit] == 1) {
-
                     if (p1board[reverseIndex[pit]] > 0) {
-
                         p2board[PIT_SIZE] += 1 + p1board[reverseIndex[pit]];
                         p2board[pit] = 0;
                         p1board[reverseIndex[pit]] = 0;
-
-
                     }
                 }
             }
-
         }
     }
 
@@ -256,5 +286,17 @@ public class MancalaModel extends Observable {
      */
     public boolean isDone() {
         return gameOver;
+    }
+    
+    public boolean isLegalMove() {
+        return legalMove;
+    }
+
+    public int getCurrentPlayer() {
+        return lastPlayer == 1 ? 2 : 1;
+    }
+
+    private void resetLastPlayer() {
+        lastPlayer = lastPlayer == 1 ? 2 : 1;
     }
 }

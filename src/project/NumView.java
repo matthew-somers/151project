@@ -28,8 +28,8 @@ public class NumView implements MancalaView {
         boardview = new JPanel();
         p1Pits = new JPanel();
         p2Pits = new JPanel();
-        p1Mancala = new GameButton(null, "", 100, 150,1,6);
-        p2Mancala = new GameButton(null, "", 100, 150,2,6);
+        p1Mancala = new GameButton(this,null, "", 100, 150,1,6);
+        p2Mancala = new GameButton(this,null, "", 100, 150,2,6);
 
         boardview.setLayout(new BorderLayout());
         p1Pits.setLayout(new FlowLayout());
@@ -37,8 +37,8 @@ public class NumView implements MancalaView {
 
         //fill up pits with buttons
         for (int i = 0; i < MancalaModel.PIT_SIZE; i++) {
-            GameButton p1butt = new GameButton(controller,"",80,50,1,i);
-            GameButton p2butt = new GameButton(controller,"",80,50,2,5-i);
+            GameButton p1butt = new GameButton(this,controller,"",80,50,1,i);
+            GameButton p2butt = new GameButton(this,controller,"",80,50,2,5-i);
             p1Pits.add(p1butt);
             p2Pits.add(p2butt);
         }
@@ -115,6 +115,11 @@ public class NumView implements MancalaView {
      */
     public void setVisible() {
         frame.setVisible(true);
+    }
+
+    @Override
+    public String getPitTextColor() {
+        return "#000000";
     }
 
 }

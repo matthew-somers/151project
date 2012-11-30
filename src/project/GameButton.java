@@ -22,9 +22,11 @@ public class GameButton extends JButton {
      *
      */
     protected int buttonId; // 0-5 field 6 Mancala
+    private MancalaView myView;
 
-    GameButton(MancalaController ctlr, String iconName, int width, int height, int playerid, int button) {
+    GameButton(MancalaView mv, MancalaController ctlr, String iconName, int width, int height, int playerid, int button) {
         super();
+        myView = mv;
         if (!iconName.isEmpty()) {
             setIcon(new ImageIcon(iconName));
         }
@@ -41,6 +43,10 @@ public class GameButton extends JButton {
         this.buttonId = button;
     }
 
+    public MancalaView getView() {
+        return myView;
+    }
+    
     /**
      * @return the playerId
      */

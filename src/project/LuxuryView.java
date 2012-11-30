@@ -22,6 +22,11 @@ public class LuxuryView implements MancalaView {
     private GameButton p2Mancala;
     private BackgroundPanel boardview;
 
+    @Override
+    public String getPitTextColor() {
+        return "#FFFF00";
+    }
+
     /**
      * this inner class is to create a panel with background image this inner
      * class extends the JPanel
@@ -61,8 +66,8 @@ public class LuxuryView implements MancalaView {
         pit2.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         
 
-        p1Mancala = new GameButton(null, "images/woodenMancala.png", 0, 0,1,6);
-        p2Mancala = new GameButton(null, "images/woodenMancala.png", 0, 0,2,6);
+        p1Mancala = new GameButton(this,null, "images/woodenMancala.png", 0, 0,1,6);
+        p2Mancala = new GameButton(this,null, "images/woodenMancala.png", 0, 0,2,6);
 
         boardview.setLayout(new BorderLayout());
 
@@ -71,13 +76,13 @@ public class LuxuryView implements MancalaView {
         //pit2
         for (int i = 0; i < MancalaModel.PIT_SIZE; i++) 
         {
-            GameButton p2butt = new GameButton(controller, "images/woodenround.png", 80, 80,2,i);
+            GameButton p2butt = new GameButton(this,controller, "images/woodenround.png", 80, 80,2,i);
             pit2.add(p2butt);
         }
 
         //pit1
         for (int i = 0; i < MancalaModel.PIT_SIZE; i++) {
-            GameButton p1butt = new GameButton(controller, "images/woodenround.png", 80, 80,1,i);
+            GameButton p1butt = new GameButton(this,controller, "images/woodenround.png", 80, 80,1,i);
             pit1.add(p1butt);
         }
 
@@ -156,7 +161,7 @@ public class LuxuryView implements MancalaView {
                 s = "O" + "x" + count;
             }
     	}
-    	String htmlString = "<html> <font color=#FFFF00  >" + s + "</font>";
+    	String htmlString = "<html> <font color="+getPitTextColor()+">" + s + "</font>";
     		     button.setText(htmlString);
     	
     	button.setBorder(null);
