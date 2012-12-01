@@ -78,6 +78,8 @@ public class MancalaModel extends Observable {
     public void initializeStones(int starting_stones) {
         Arrays.fill(p1board, 0, PIT_SIZE, starting_stones);
         Arrays.fill(p2board, 0, PIT_SIZE, starting_stones);
+        p1board[PIT_SIZE] = 0;
+        p2board[PIT_SIZE] = 0;
         gameOver = false;
         notifyViews();
     }
@@ -298,5 +300,13 @@ public class MancalaModel extends Observable {
 
     private void resetLastPlayer() {
         lastPlayer = lastPlayer == 1 ? 2 : 1;
+    }
+    
+    public void resetGame() {
+        for (MancalaView view : views) {
+            view.close();
+        }
+    	views.clear();
+    	//gameOver = false;
     }
 }

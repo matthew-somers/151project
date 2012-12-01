@@ -27,4 +27,6 @@ public interface MancalaView {
     public void updateButton(JButton button, int data);
     
     public String getPitTextColor();
+    
+    public void close();
 }

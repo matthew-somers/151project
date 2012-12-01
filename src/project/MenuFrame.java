@@ -29,17 +29,18 @@ public class MenuFrame extends JFrame {
         model = model2;
         controller = controller2;
 
-        setTitle("Mancala");
+        setTitle("Mancala Game");
         setLayout(new FlowLayout());
-        setSize(new Dimension(200, 200));
+        setSize(new Dimension(250, 250));
 
 
 
-        JButton simpleViewButton = new JButton("SimpleView");
-        JButton LuxuryViewButton = new JButton("LuxuryView");
-        JButton IconViewButton = new JButton("IconView");
+        JButton simpleViewButton = new JButton("Simple View");
+        JButton LuxuryViewButton = new JButton("Luxury View");
+        JButton IconViewButton = new JButton("Icon View");
+        JButton resetbutton = new JButton("Reset Game");
 
-        simpleViewButton.setPreferredSize(new Dimension(100, 50));
+        simpleViewButton.setPreferredSize(new Dimension(150, 50));
         simpleViewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 NumView numview = new NumView(controller);
@@ -52,7 +53,7 @@ public class MenuFrame extends JFrame {
             }
         });
 
-        IconViewButton.setPreferredSize(new Dimension(100, 50));
+        IconViewButton.setPreferredSize(new Dimension(150, 50));
         IconViewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 IconView iconview = new IconView(controller);
@@ -65,7 +66,7 @@ public class MenuFrame extends JFrame {
             }
         });
 
-        LuxuryViewButton.setPreferredSize(new Dimension(100, 50));
+        LuxuryViewButton.setPreferredSize(new Dimension(150, 50));
         LuxuryViewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 LuxuryView luxview = new LuxuryView(controller);
@@ -78,9 +79,18 @@ public class MenuFrame extends JFrame {
             }
         });
 
+        resetbutton.setPreferredSize(new Dimension(125, 50));
+        resetbutton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+            	model.resetGame();
+            }
+        });
+        
+        
         this.add(simpleViewButton);
         this.add(IconViewButton);
         this.add(LuxuryViewButton);
+        this.add(resetbutton);
         setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

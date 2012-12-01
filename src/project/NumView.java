@@ -71,6 +71,7 @@ public class NumView implements MancalaView {
 
         frame = new JFrame();
         frame.setSize(700, 300);
+        frame.setResizable(false);
         frame.setTitle("Num View");
         frame.add(boardview);
         frame.setVisible(true);
@@ -80,8 +81,10 @@ public class NumView implements MancalaView {
     @Override
     public void stateChanged(ChangeEvent event) {
         MancalaModel model = (MancalaModel) event.getSource();
+        
         int[] p1board = model.getp1board();
         int[] p2board = model.getp2board();
+        
         Component[] b1 = p1Pits.getComponents();
         Component[] b2 = p2Pits.getComponents();
 
@@ -97,6 +100,18 @@ public class NumView implements MancalaView {
 
         updateButton(p1Mancala, p1board[MancalaModel.PIT_SIZE]);
         updateButton(p2Mancala, p2board[MancalaModel.PIT_SIZE]);
+        
+        if (model.isDone()) {
+        	if (p1board[p1board.length-1] > p2board[p2board.length-1]) {
+	        	JOptionPane.showMessageDialog(null, "Player 1"
+	        		+ " Wins!", "Congratulations!", 1);
+        	}
+        	
+        	else {
+	        	JOptionPane.showMessageDialog(null, "Player 2"
+		        		+ " Wins!", "Congratulations!", 1);
+        	}
+        }
     }
 
     /**
@@ -110,16 +125,13 @@ public class NumView implements MancalaView {
         button.setText(data + "");
     }
 
-    /**
-     *
-     */
-    public void setVisible() {
-        frame.setVisible(true);
-    }
-
     @Override
     public String getPitTextColor() {
         return "#000000";
+    }
+    
+    public void close() {
+    	frame.dispose();
     }
 
 }

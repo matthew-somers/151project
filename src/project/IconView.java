@@ -19,6 +19,7 @@ public class IconView implements MancalaView {
     private JButton p1Mancala;
     private JButton p2Mancala;
     private JPanel boardview;
+    private JFrame frame;
 
     /**
      * constructor for IconView
@@ -69,8 +70,9 @@ public class IconView implements MancalaView {
         boardview.add(pits, BorderLayout.CENTER);
         boardview.add(p2Mancala, BorderLayout.LINE_START);
 
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.setSize(700, 300);
+        frame.setResizable(false);
         frame.setTitle("Icon View");
         frame.add(boardview);
         frame.setVisible(true);
@@ -103,6 +105,18 @@ public class IconView implements MancalaView {
         }
         updateButton(p1Mancala, p1board[MancalaModel.PIT_SIZE]);
         updateButton(p2Mancala, p2board[MancalaModel.PIT_SIZE]);
+        
+        if (model.isDone()) {
+        	if (p1board[p1board.length-1] > p2board[p2board.length-1]) {
+	        	JOptionPane.showMessageDialog(null, "Player 1"
+	        		+ " Wins!", "Congratulations!", 1);
+        	}
+        	
+        	else {
+	        	JOptionPane.showMessageDialog(null, "Player 2"
+		        		+ " Wins!", "Congratulations!", 1);
+        	}
+        }
     }
 
     /**
@@ -129,32 +143,13 @@ public class IconView implements MancalaView {
 
     }
 
-    /**
-     * accessor to get the main panel to the view
-     *
-     * @return the panel of this view
-     */
-    public JPanel getPanel() {
-        return boardview;
-    }
-
-    /**
-     * accessor to get the dimension of this view
-     *
-     * @return the dimension of this view
-     */
-    public Dimension getDimension() {
-        return new Dimension(700, 200);
-    }
-
-    /**
-     *
-     */
-    public void setVisible() {
-    }
 
     @Override
     public String getPitTextColor() {
         return "#FFFF00";
+    }
+    
+    public void close() {
+    	frame.dispose();
     }
 }
