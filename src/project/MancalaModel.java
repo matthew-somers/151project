@@ -1,17 +1,15 @@
 package project;
 
-// todo: player control tracking and free move from Mancala or undo
-//       Gentlemen's rules....
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
-
-import javax.swing.JButton;
 import javax.swing.event.ChangeEvent;
 
 /**
  *
- * @author jory
+ * @author Wesley Eversole
+ * 
  */
 public class MancalaModel extends Observable {
 
@@ -55,16 +53,16 @@ public class MancalaModel extends Observable {
     }
 
     /**
-     *
-     * @return
+     * gets the board for player 1
+     * @return the array of player 1's board
      */
     public int[] getp1board() {
         return p1board;
     }
 
     /**
-     *
-     * @return
+     * gets the board for player 2
+     * @return the array of player 2's board
      */
     public int[] getp2board() {
         return p2board;
@@ -94,9 +92,9 @@ public class MancalaModel extends Observable {
     }
 
     /**
-     *
+     * Checks a move and if it is legal and if so makes the move
      * @param playerId
-     * @param buttonId
+     * @param buttonId 
      */
     public void makeMove(int playerId, int buttonId) {
         int moreStones;
@@ -266,7 +264,7 @@ public class MancalaModel extends Observable {
     }
 
     /**
-     *
+     * Tells the view that the state has changed
      */
     public void notifyViews() {
         for (MancalaView view : views) {
@@ -275,25 +273,33 @@ public class MancalaModel extends Observable {
     }
 
     /**
-     *
-     * @return
+     * Checks if the view is empty
+     * @return true if view is empty 
      */
     public boolean isEmpty() {
         return views.isEmpty();
     }
 
     /**
-     *
-     * @return
+     * Checks if the game is over
+     * @return true if the game is over
      */
     public boolean isDone() {
         return gameOver;
     }
     
+    /**
+     * Checks if a move is legal
+     * @return ture if the move is legal
+     */
     public boolean isLegalMove() {
         return legalMove;
     }
 
+    /**
+     * Gets the current player
+     * @return current player
+     */
     public int getCurrentPlayer() {
         return lastPlayer == 1 ? 2 : 1;
     }
@@ -302,6 +308,9 @@ public class MancalaModel extends Observable {
         lastPlayer = lastPlayer == 1 ? 2 : 1;
     }
     
+    /**
+     * Resets game to a starting state
+     */
     public void resetGame() {
         for (MancalaView view : views) {
             view.close();

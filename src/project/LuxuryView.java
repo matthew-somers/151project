@@ -1,7 +1,6 @@
 package project;
 
 import java.awt.*;
-
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 
@@ -23,6 +22,10 @@ public class LuxuryView implements MancalaView {
     private BackgroundPanel boardview;
     private JFrame frame;
 
+    /**
+     *Gets the Text color
+     * @return text color
+     */
     @Override
     public String getPitTextColor() {
         return "#FFFF00";
@@ -159,7 +162,6 @@ public class LuxuryView implements MancalaView {
      * method to update the View
      *
      * @param button the button
-     * @param int the data index to be changed
      */
     @Override
     public void updateButton(JButton button, int data)
@@ -181,6 +183,10 @@ public class LuxuryView implements MancalaView {
 
     }
     
+    /**
+     *Closes the view
+     */
+    @Override
     public void close() {
     	frame.dispose();
     }

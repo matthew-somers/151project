@@ -1,6 +1,5 @@
 package project;
 
-import java.awt.Dimension;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -26,7 +25,14 @@ public interface MancalaView {
      */
     public void updateButton(JButton button, int data);
     
+    /**
+     *
+     * @return
+     */
     public String getPitTextColor();
     
+    /**
+     *
+     */
     public void close();
 }

@@ -10,7 +10,7 @@ import javax.swing.JButton;
 
 /**
  *
- * @author jory
+ * @author Wesley Eversole
  */
 public class GameButton extends JButton {
 
@@ -43,11 +43,16 @@ public class GameButton extends JButton {
         this.buttonId = button;
     }
 
+    /**
+     *Gets the view 
+     * @return myView
+     */
     public MancalaView getView() {
         return myView;
     }
     
     /**
+     * Gets the player ID
      * @return the playerId
      */
     public int getPlayerId() {
@@ -55,6 +60,7 @@ public class GameButton extends JButton {
     }
 
     /**
+     * Sets the player's ID
      * @param playerId the playerId to set
      */
     public void setPlayerId(int playerId) {
@@ -62,6 +68,7 @@ public class GameButton extends JButton {
     }
 
     /**
+     * Gets the Button ID
      * @return the buttonId
      */
     public int getButtonId() {
@@ -69,6 +76,7 @@ public class GameButton extends JButton {
     }
 
     /**
+     * Sets the button ID
      * @param buttonId the buttonId to set
      */
     public void setButtonId(int buttonId) {

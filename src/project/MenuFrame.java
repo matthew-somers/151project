@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author jory
+ * @author Wesley Eversole
  */
 public class MenuFrame extends JFrame {
 
@@ -42,6 +42,7 @@ public class MenuFrame extends JFrame {
 
         simpleViewButton.setPreferredSize(new Dimension(150, 50));
         simpleViewButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 NumView numview = new NumView(controller);
                 if (model.isEmpty()) {
@@ -55,6 +56,7 @@ public class MenuFrame extends JFrame {
 
         IconViewButton.setPreferredSize(new Dimension(150, 50));
         IconViewButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 IconView iconview = new IconView(controller);
                 if (model.isEmpty()) {
@@ -68,6 +70,7 @@ public class MenuFrame extends JFrame {
 
         LuxuryViewButton.setPreferredSize(new Dimension(150, 50));
         LuxuryViewButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 LuxuryView luxview = new LuxuryView(controller);
                 if (model.isEmpty()) {
@@ -81,6 +84,7 @@ public class MenuFrame extends JFrame {
 
         resetbutton.setPreferredSize(new Dimension(125, 50));
         resetbutton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
             	model.resetGame();
             }
@@ -97,7 +101,7 @@ public class MenuFrame extends JFrame {
     }
 
     /**
-     *
+     *Sets the amount of starting stones
      */
     public void setStartingStones() {
         Object[] possibleValues = {"3", "4"};

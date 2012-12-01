@@ -1,12 +1,11 @@
 package project;
 
 import java.awt.*;
-
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 
 /**
- * this class is to create an icon view for macala game
+ * this class is to create an icon view for mancala game
  *
  * @author lamlu
  *
@@ -123,7 +122,6 @@ public class IconView implements MancalaView {
      * method to update the View
      *
      * @param button the button
-     * @param int the data index to be changed
      */
     @Override
     public void updateButton(JButton button, int data) {
@@ -144,11 +142,19 @@ public class IconView implements MancalaView {
     }
 
 
+    /**
+     * Gets the color for text
+     * @return the color of the text
+     */
     @Override
     public String getPitTextColor() {
         return "#FFFF00";
     }
     
+    /**
+     *Closes the frame
+     */
+    @Override
     public void close() {
     	frame.dispose();
     }

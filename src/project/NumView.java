@@ -8,7 +8,7 @@ import javax.swing.event.ChangeEvent;
 
 /**
  *
- * @author jory
+ * @author Wesley Eversole
  */
 public class NumView implements MancalaView {
 
@@ -118,18 +118,25 @@ public class NumView implements MancalaView {
      * method to update the View
      *
      * @param button the button
-     * @param int the data index to be changed
      */
     @Override
     public void updateButton(JButton button, int data) {
         button.setText(data + "");
     }
 
+    /**
+     * Gets the color of the text for a pit
+     * @return the color of the text color
+     */
     @Override
     public String getPitTextColor() {
         return "#000000";
     }
     
+    /**
+     *Closes the view
+     */
+    @Override
     public void close() {
     	frame.dispose();
     }
