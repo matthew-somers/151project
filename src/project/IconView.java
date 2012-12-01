@@ -15,10 +15,14 @@ public class IconView implements MancalaView {
     private JPanel pits;// the panel to contain both p1Pits and p2Pits
     private JPanel pit1;
     private JPanel pit2;
+    private JLabel turn;
     private JButton p1Mancala;
     private JButton p2Mancala;
     private JPanel boardview;
     private JFrame frame;
+    private String messageStart = "    Turn: Player ";
+    private String messageEnd = "";
+    private MancalaController ctlr;
 
     /**
      * constructor for IconView
@@ -27,6 +31,7 @@ public class IconView implements MancalaView {
      */
     public IconView(MancalaController controller) {
 
+        ctlr = controller;
         boardview = new JPanel();
         pits = new JPanel(new BorderLayout());
         pit1 = new JPanel(new GridLayout(0, 6));
@@ -37,7 +42,8 @@ public class IconView implements MancalaView {
 
         p1Mancala = new GameButton(this,null, "images/greenmacala.png", 0, 0, 1, 6);
         p2Mancala = new GameButton(this,null, "images/bluemacala.png", 0, 0, 2, 6);
-
+        turn = new JLabel(messageStart + controller.getPlayer() +  messageEnd);
+        
         boardview.setLayout(new BorderLayout());
 
 
@@ -63,6 +69,7 @@ public class IconView implements MancalaView {
 
         pits.add(pit1, BorderLayout.SOUTH);
         pits.add(pit2, BorderLayout.NORTH);
+        pits.add(turn,BorderLayout.CENTER);
 
         boardview.add(p1Mancala, BorderLayout.LINE_END);
 
@@ -90,7 +97,7 @@ public class IconView implements MancalaView {
         int[] p2board = model.getp2board();
         Component[] pit1Components = pit1.getComponents();
         Component[] pit2Components = pit2.getComponents();
-
+        turn.setText(messageStart + ctlr.getPlayer() +  messageEnd);
         //pits 1
         for (int i = 0; i < 6; i++) {
             JButton jb1 = (JButton) pit1Components[i];

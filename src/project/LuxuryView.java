@@ -21,9 +21,14 @@ public class LuxuryView implements MancalaView {
     private GameButton p2Mancala;
     private BackgroundPanel boardview;
     private JFrame frame;
+    private JLabel turn;
+    private String messageStart = "Player ";
+    private String messageEnd = "'s turn ";
+    private MancalaController ctlr;
 
     /**
-     *Gets the Text color
+     * Gets the Text color
+     *
      * @return text color
      */
     @Override
@@ -57,36 +62,37 @@ public class LuxuryView implements MancalaView {
     public LuxuryView(MancalaController controller) {
         p1MancalaPanel = new BackgroundPanel();
         p1MancalaPanel.setLayout(new FlowLayout());
-
+        ctlr = controller;
+        turn = new JLabel(messageStart + controller.getPlayer() + messageEnd);
+        
         p2MancalaPanel = new BackgroundPanel();
         p2MancalaPanel.setLayout(new FlowLayout());
         boardview = new BackgroundPanel();
         pits = new JPanel(new BorderLayout());
         pit1 = new BackgroundPanel();
-        pit1.setLayout(new GridLayout(0,6));
+        pit1.setLayout(new GridLayout(0, 6));
         pit1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         pit2 = new BackgroundPanel();
-        pit2.setLayout(new GridLayout(0,6));
+        pit2.setLayout(new GridLayout(0, 6));
         pit2.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-        
 
-        p1Mancala = new GameButton(this,null, "images/woodenMancala.png", 0, 0,1,6);
-        p2Mancala = new GameButton(this,null, "images/woodenMancala.png", 0, 0,2,6);
+
+        p1Mancala = new GameButton(this, null, "images/woodenMancala.png", 0, 0, 1, 6);
+        p2Mancala = new GameButton(this, null, "images/woodenMancala.png", 0, 0, 2, 6);
 
         boardview.setLayout(new BorderLayout());
 
 
         //fill up pits with buttons
         //pit2
-        for (int i = 0; i < MancalaModel.PIT_SIZE; i++) 
-        {
-            GameButton p2butt = new GameButton(this,controller, "images/woodenround.png", 80, 80,2,i);
+        for (int i = 0; i < MancalaModel.PIT_SIZE; i++) {
+            GameButton p2butt = new GameButton(this, controller, "images/woodenround.png", 80, 80, 2, i);
             pit2.add(p2butt);
         }
 
         //pit1
         for (int i = 0; i < MancalaModel.PIT_SIZE; i++) {
-            GameButton p1butt = new GameButton(this,controller, "images/woodenround.png", 80, 80,1,i);
+            GameButton p1butt = new GameButton(this, controller, "images/woodenround.png", 80, 80, 1, i);
             pit1.add(p1butt);
         }
 
@@ -95,19 +101,23 @@ public class LuxuryView implements MancalaView {
 
         p1Mancala.setPreferredSize(new Dimension(300, 100));
         p2Mancala.setPreferredSize(new Dimension(300, 100));
-        
+
         pits.add(pit1, BorderLayout.SOUTH);
         pits.add(pit2, BorderLayout.NORTH);
+        p1MancalaPanel.add(new JLabel("       Matthew  "));
         p1MancalaPanel.add(p1Mancala);
+        p1MancalaPanel.add(new JLabel("  Wesley        "));
+        p2MancalaPanel.add(turn);
         p2MancalaPanel.add(p2Mancala);
+        p2MancalaPanel.add(new JLabel("  Lam           "));
         boardview.add(p1MancalaPanel, BorderLayout.PAGE_END);
-        
-        
+
+
         boardview.add(pits, BorderLayout.CENTER);
         boardview.add(p2MancalaPanel, BorderLayout.PAGE_START);
 
         frame = new JFrame();
-        frame.setSize(650, 402);
+        frame.setSize(650, 420);
         frame.setResizable(false);
         frame.setTitle("Luxury View");
         frame.add(boardview);
@@ -128,33 +138,29 @@ public class LuxuryView implements MancalaView {
         int[] p2board = model.getp2board();
         Component[] pit1Components = pit1.getComponents();
         Component[] pit2Components = pit2.getComponents();
-
+        turn.setText(messageStart + ctlr.getPlayer() + messageEnd);
         //pits 1
-        for (int i = 0; i < 6; i++)
-        {
+        for (int i = 0; i < 6; i++) {
             JButton jb1 = (JButton) pit1Components[i];
             updateButton(jb1, p1board[i]);
         }
 
         //pits 2
-        for (int i = 0; i < 6; i++) 
-        {
+        for (int i = 0; i < 6; i++) {
             JButton jb2 = (JButton) pit2Components[i];
             updateButton(jb2, p2board[i]);
         }
         updateButton(p1Mancala, p1board[MancalaModel.PIT_SIZE]);
         updateButton(p2Mancala, p2board[MancalaModel.PIT_SIZE]);
-        
+
         if (model.isDone()) {
-        	if (p1board[p1board.length-1] > p2board[p2board.length-1]) {
-	        	JOptionPane.showMessageDialog(null, "Player 1"
-	        		+ " Wins!", "Congratulations!", 1);
-        	}
-        	
-        	else {
-	        	JOptionPane.showMessageDialog(null, "Player 2"
-		        		+ " Wins!", "Congratulations!", 1);
-        	}
+            if (p1board[p1board.length - 1] > p2board[p2board.length - 1]) {
+                JOptionPane.showMessageDialog(null, "Player 1"
+                        + " Wins!", "Congratulations!", 1);
+            } else {
+                JOptionPane.showMessageDialog(null, "Player 2"
+                        + " Wins!", "Congratulations!", 1);
+            }
         }
     }
 
@@ -164,31 +170,28 @@ public class LuxuryView implements MancalaView {
      * @param button the button
      */
     @Override
-    public void updateButton(JButton button, int data)
-    {
-    	String s = "";
-    	int count = 0;
-    	for (int i = 0; i < data; i++)
-    	{
-    		s += "o";
-    		count++;
-    		if(count >= 10) {
+    public void updateButton(JButton button, int data) {
+        String s = "";
+        int count = 0;
+        for (int i = 0; i < data; i++) {
+            s += "o";
+            count++;
+            if (count >= 10) {
                 s = "O" + "x" + count;
             }
-    	}
-    	String htmlString = "<html> <font color="+getPitTextColor()+">" + s + "</font>";
-    		     button.setText(htmlString);
-    	
-    	button.setBorder(null);
+        }
+        String htmlString = "<html> <font color=" + getPitTextColor() + ">" + s + "</font>";
+        button.setText(htmlString);
+
+        button.setBorder(null);
 
     }
-    
+
     /**
-     *Closes the view
+     * Closes the view
      */
     @Override
     public void close() {
-    	frame.dispose();
+        frame.dispose();
     }
-
 }

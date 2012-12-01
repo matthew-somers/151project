@@ -18,7 +18,11 @@ public class MancalaController implements ActionListener {
     public MancalaController(MancalaModel model) {
         this.model = model;
     }
-
+    
+    public int getPlayer() {
+        return model.getCurrentPlayer();
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         GameButton gb = (GameButton) e.getSource();
