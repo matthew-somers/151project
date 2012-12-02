@@ -11,8 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Wesley Eversole
+ * A frame to control the different views.
+ * @author Wesley Eversole, Matthew Somers, Lam Lu
  */
 public class MenuFrame extends JFrame {
 
@@ -21,9 +21,9 @@ public class MenuFrame extends JFrame {
     private int numStones;
 
     /**
-     *
-     * @param model2
-     * @param controller2
+     * Constructor that sets up buttons to start a new game.
+     * @param model2 That model to tell if a new game is starting.
+     * @param controller2 The controller to build new views.
      */
     public MenuFrame(MancalaModel model2, final MancalaController controller2) {
         model = model2;
@@ -32,8 +32,6 @@ public class MenuFrame extends JFrame {
         setTitle("Mancala Game");
         setLayout(new FlowLayout());
         setSize(new Dimension(250, 250));
-
-
 
         JButton simpleViewButton = new JButton("Simple View");
         JButton LuxuryViewButton = new JButton("Luxury View");
@@ -101,7 +99,7 @@ public class MenuFrame extends JFrame {
     }
 
     /**
-     *Sets the amount of starting stones
+     * A pop-up to set the amount of starting stones.
      */
     public void setStartingStones() {
         Object[] possibleValues = {"3", "4"};

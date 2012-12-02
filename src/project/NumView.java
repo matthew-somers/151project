@@ -8,7 +8,7 @@ import javax.swing.event.ChangeEvent;
 
 /**
  *
- * @author Wesley Eversole
+ * @author Wesley Eversole, Matthew Somers
  */
 public class NumView implements MancalaView {
 
@@ -18,6 +18,7 @@ public class NumView implements MancalaView {
     private GameButton p2Mancala;
     private JPanel boardview;
     private JFrame frame;
+    private JLabel currentturn;
 
     /**
      * constructor for NumView
@@ -66,13 +67,16 @@ public class NumView implements MancalaView {
         labels.add(p2pits, BorderLayout.NORTH);
         labels.add(p1mancala, BorderLayout.EAST);
         labels.add(p2mancala, BorderLayout.WEST);
+        currentturn = new JLabel();
+        currentturn.setHorizontalAlignment(SwingConstants.CENTER);
+        labels.add(currentturn, BorderLayout.CENTER);
 
         boardview.add(labels, BorderLayout.CENTER);
 
         frame = new JFrame();
         frame.setSize(700, 300);
         frame.setResizable(false);
-        frame.setTitle("Num View");
+        frame.setTitle("Simple View");
         frame.add(boardview);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -103,15 +107,24 @@ public class NumView implements MancalaView {
         
         if (model.isDone()) {
         	if (p1board[p1board.length-1] > p2board[p2board.length-1]) {
-	        	JOptionPane.showMessageDialog(null, "Player 1"
+	        	JOptionPane.showMessageDialog(boardview, "Player 1"
 	        		+ " Wins!", "Congratulations!", 1);
         	}
         	
+        	else if (p1board[p1board.length-1] > p2board[p2board.length-1]) {
+	        	JOptionPane.showMessageDialog(boardview, "Everyone Loses!", "Draw!", 1);
+        	}
+        	
         	else {
-	        	JOptionPane.showMessageDialog(null, "Player 2"
+	        	JOptionPane.showMessageDialog(boardview, "Player 2"
 		        		+ " Wins!", "Congratulations!", 1);
         	}
         }
+        
+        if (model.getCurrentPlayer() == 1)
+        	currentturn.setText("Currently: P1's turn.");
+        else
+        	currentturn.setText("Currently: P2's turn.");
     }
 
     /**

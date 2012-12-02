@@ -7,7 +7,7 @@ import javax.swing.event.ChangeEvent;
 /**
  * this class is to create an icon view for mancala game
  *
- * @author lamlu
+ * @author lamlu, Matthew Somers
  *
  */
 public class IconView implements MancalaView {
@@ -20,9 +20,7 @@ public class IconView implements MancalaView {
     private JButton p2Mancala;
     private JPanel boardview;
     private JFrame frame;
-    private String messageStart = "    Turn: Player ";
-    private String messageEnd = "";
-    private MancalaController ctlr;
+    private String messageStart = "    Current Turn: ";
 
     /**
      * constructor for IconView
@@ -31,7 +29,6 @@ public class IconView implements MancalaView {
      */
     public IconView(MancalaController controller) {
 
-        ctlr = controller;
         boardview = new JPanel();
         pits = new JPanel(new BorderLayout());
         pit1 = new JPanel(new GridLayout(0, 6));
@@ -42,7 +39,8 @@ public class IconView implements MancalaView {
 
         p1Mancala = new GameButton(this,null, "images/greenmacala.png", 0, 0, 1, 6);
         p2Mancala = new GameButton(this,null, "images/bluemacala.png", 0, 0, 2, 6);
-        turn = new JLabel(messageStart + controller.getPlayer() +  messageEnd);
+        turn = new JLabel(messageStart);
+        turn.setHorizontalAlignment(SwingConstants.CENTER);
         
         boardview.setLayout(new BorderLayout());
 
@@ -88,7 +86,7 @@ public class IconView implements MancalaView {
     /**
      * the method to be called when the state of the game is changed
      *
-     * @param event the ChangeEvent
+     * @param event the model that called for this view to change
      */
     @Override
     public void stateChanged(ChangeEvent event) {
@@ -97,7 +95,11 @@ public class IconView implements MancalaView {
         int[] p2board = model.getp2board();
         Component[] pit1Components = pit1.getComponents();
         Component[] pit2Components = pit2.getComponents();
-        turn.setText(messageStart + ctlr.getPlayer() +  messageEnd);
+        if (model.getCurrentPlayer() == 2)
+        	turn.setText(messageStart + "Blue");
+        else
+        	turn.setText(messageStart + "Green");
+        
         //pits 1
         for (int i = 0; i < 6; i++) {
             JButton jb1 = (JButton) pit1Components[i];
@@ -114,12 +116,16 @@ public class IconView implements MancalaView {
         
         if (model.isDone()) {
         	if (p1board[p1board.length-1] > p2board[p2board.length-1]) {
-	        	JOptionPane.showMessageDialog(null, "Player 1"
+	        	JOptionPane.showMessageDialog(pits, "Green"
 	        		+ " Wins!", "Congratulations!", 1);
         	}
         	
+        	else if (p1board[p1board.length-1] > p2board[p2board.length-1]) {
+	        	JOptionPane.showMessageDialog(boardview, "Everyone Loses!", "Draw!", 1);
+        	}
+        	
         	else {
-	        	JOptionPane.showMessageDialog(null, "Player 2"
+	        	JOptionPane.showMessageDialog(boardview, "Blue"
 		        		+ " Wins!", "Congratulations!", 1);
         	}
         }
@@ -128,7 +134,8 @@ public class IconView implements MancalaView {
     /**
      * method to update the View
      *
-     * @param button the button
+     * @param button the button to be updated
+     * @param data the data to be represented on the button
      */
     @Override
     public void updateButton(JButton button, int data) {
@@ -145,7 +152,6 @@ public class IconView implements MancalaView {
         button.setText(htmlString);
 
         button.setBorder(null);
-
     }
 
 

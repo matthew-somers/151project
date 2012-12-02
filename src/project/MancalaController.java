@@ -4,25 +4,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- *
- * @author Wesley Eversole 
+ * Tells buttons what to do for a mancala board.
+ * @author Wesley Eversole, Matthew Somers
  */
 public class MancalaController implements ActionListener {
 
     private MancalaModel model;
 
     /**
-     *
-     * @param model
+     * Simple constructor.
+     * @param model The model to be interacted with as per MVC.
      */
     public MancalaController(MancalaModel model) {
         this.model = model;
     }
     
-    public int getPlayer() {
-        return model.getCurrentPlayer();
-    }
-    
+    /**
+     * The main utility that makes a move and updates button.
+     * @param e The source button that was clicked.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         GameButton gb = (GameButton) e.getSource();

@@ -2,16 +2,13 @@ package project;
 
 
 /**
- * this class is to test the program contains main method
- *
+ * Tests out the mancala game!
  * @author Matthew Somers
- *
  */
 public class MancalaTest {
 
     /**
      * main method
-     *
      * @param args not used
      */
     public static void main(String[] args) {

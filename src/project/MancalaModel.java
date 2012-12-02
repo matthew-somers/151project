@@ -7,8 +7,8 @@ import java.util.Observable;
 import javax.swing.event.ChangeEvent;
 
 /**
- *
- * @author Wesley Eversole
+ * A model to represent a Mancala board's data.
+ * @author Wesley Eversole, Matthew Somers
  * 
  */
 public class MancalaModel extends Observable {
@@ -21,9 +21,7 @@ public class MancalaModel extends Observable {
     private int[] undoP1board;
     private int[] undoP2board;
     ArrayList<MancalaView> views;
-    /**
-     *
-     */
+    
     public static final int PIT_SIZE = 6;
     private boolean gameOver;
     private boolean freemove; // undo type free move only
@@ -32,7 +30,7 @@ public class MancalaModel extends Observable {
     private boolean legalMove;
 
     /**
-     *
+     * Constructor for this model.
      */
     public MancalaModel() {
         p1board = new int[PIT_SIZE + 1]; // 6 pits, last is p1's mancala
@@ -83,7 +81,7 @@ public class MancalaModel extends Observable {
     }
 
     /**
-     *
+     * Adds a new view to the model.
      * @param mview
      */
     public void addView(MancalaView mview) {
@@ -92,7 +90,7 @@ public class MancalaModel extends Observable {
     }
 
     /**
-     * Checks a move and if it is legal and if so makes the move
+     * Checks a move and if it is legal and if so makes the move.
      * @param playerId
      * @param buttonId 
      */
@@ -220,6 +218,9 @@ public class MancalaModel extends Observable {
         }
     }
 
+    /**
+     * Checks if a move ends the game.
+     */
     private void checkWinningMove() {
         int board2sum = 0, board1sum = 0;
         for (int i = 0; i < PIT_SIZE; i++) {
@@ -241,6 +242,11 @@ public class MancalaModel extends Observable {
         }
     }
 
+    /**
+     * Checks if a move captures opponents stones.
+     * @param player
+     * @param pit
+     */
     private void checkCaptureMove(int player, int pit) {
         if (player == 1) {
             if (p1board[pit] == 1) {
@@ -304,6 +310,9 @@ public class MancalaModel extends Observable {
         return lastPlayer == 1 ? 2 : 1;
     }
 
+    /**
+     * Resets current player in case of extra turn being awarded.
+     */
     private void resetLastPlayer() {
         lastPlayer = lastPlayer == 1 ? 2 : 1;
     }
@@ -316,6 +325,5 @@ public class MancalaModel extends Observable {
             view.close();
         }
     	views.clear();
-    	//gameOver = false;
     }
 }

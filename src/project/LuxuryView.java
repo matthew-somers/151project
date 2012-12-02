@@ -5,9 +5,8 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 
 /**
- * this class is to create a luxury view for macala game
- *
- * @author lamlu
+ * this class is to create a luxury view for mancala game
+ * @author lamlu, Matthew Somers
  *
  */
 public class LuxuryView implements MancalaView {
@@ -21,14 +20,11 @@ public class LuxuryView implements MancalaView {
     private GameButton p2Mancala;
     private BackgroundPanel boardview;
     private JFrame frame;
-    private JLabel turn;
-    private String messageStart = "Player ";
-    private String messageEnd = "'s turn ";
-    private MancalaController ctlr;
+    private JLabel topturn;
+    private JLabel botturn;
 
     /**
      * Gets the Text color
-     *
      * @return text color
      */
     @Override
@@ -37,7 +33,7 @@ public class LuxuryView implements MancalaView {
     }
 
     /**
-     * this inner class is to create a panel with background image this inner
+     * this inner class is to create a panel with background image. This inner
      * class extends the JPanel
      *
      * @author lamlu
@@ -62,8 +58,10 @@ public class LuxuryView implements MancalaView {
     public LuxuryView(MancalaController controller) {
         p1MancalaPanel = new BackgroundPanel();
         p1MancalaPanel.setLayout(new FlowLayout());
-        ctlr = controller;
-        turn = new JLabel(messageStart + controller.getPlayer() + messageEnd);
+        topturn = new JLabel("<html> <font color=" + "#FFFFFF" + ">" + "Top's Turn" + "</font>");
+        botturn = new JLabel("<html> <font color=" + "#FFFFFF" + ">" + "Bottom's Turn" + "</font>");
+        topturn.setPreferredSize(new Dimension(35, 30));
+        botturn.setPreferredSize(new Dimension(50,30));
         
         p2MancalaPanel = new BackgroundPanel();
         p2MancalaPanel.setLayout(new FlowLayout());
@@ -104,12 +102,12 @@ public class LuxuryView implements MancalaView {
 
         pits.add(pit1, BorderLayout.SOUTH);
         pits.add(pit2, BorderLayout.NORTH);
-        p1MancalaPanel.add(new JLabel("       Matthew  "));
+        String madeby = "<html> <font color=" + "#FFFFFF" + ">" + "Made by:<br>Matthew<br>Lam<br>Wesley" + "</font>";
+        p1MancalaPanel.add(botturn);
         p1MancalaPanel.add(p1Mancala);
-        p1MancalaPanel.add(new JLabel("  Wesley        "));
-        p2MancalaPanel.add(turn);
+        p1MancalaPanel.add(new JLabel(madeby));
+        p2MancalaPanel.add(topturn);
         p2MancalaPanel.add(p2Mancala);
-        p2MancalaPanel.add(new JLabel("  Lam           "));
         boardview.add(p1MancalaPanel, BorderLayout.PAGE_END);
 
 
@@ -128,8 +126,7 @@ public class LuxuryView implements MancalaView {
 
     /**
      * the method to be called when the state of the game is changed
-     *
-     * @param event the ChangeEvent
+     * @param event the source that called this, aka model
      */
     @Override
     public void stateChanged(ChangeEvent event) {
@@ -138,7 +135,16 @@ public class LuxuryView implements MancalaView {
         int[] p2board = model.getp2board();
         Component[] pit1Components = pit1.getComponents();
         Component[] pit2Components = pit2.getComponents();
-        turn.setText(messageStart + ctlr.getPlayer() + messageEnd);
+
+        if (model.getCurrentPlayer() == 1) {
+        	topturn.setText("        ");
+        	botturn.setText("<html> <font color=" + "#FFFFFF" + ">" + "Bottom's Turn" + "</font>");
+        }
+        else {
+        	topturn.setText("<html> <font color=" + "#FFFFFF" + ">" + "Top's Turn" + "</font>");
+        	botturn.setText("        ");
+        }
+        
         //pits 1
         for (int i = 0; i < 6; i++) {
             JButton jb1 = (JButton) pit1Components[i];
@@ -155,12 +161,17 @@ public class LuxuryView implements MancalaView {
 
         if (model.isDone()) {
             if (p1board[p1board.length - 1] > p2board[p2board.length - 1]) {
-                JOptionPane.showMessageDialog(null, "Player 1"
+                JOptionPane.showMessageDialog(pits, "Bottom"
                         + " Wins!", "Congratulations!", 1);
-            } else {
-                JOptionPane.showMessageDialog(null, "Player 2"
-                        + " Wins!", "Congratulations!", 1);
-            }
+            } 
+        	else if (p1board[p1board.length-1] > p2board[p2board.length-1]) {
+	        	JOptionPane.showMessageDialog(boardview, "Everyone Loses!", "Draw!", 1);
+        	}
+        	
+        	else {
+	        	JOptionPane.showMessageDialog(boardview, "Top"
+		        		+ " Wins!", "Congratulations!", 1);
+        	}
         }
     }
 
@@ -168,6 +179,7 @@ public class LuxuryView implements MancalaView {
      * method to update the View
      *
      * @param button the button
+     * @param data the data to be represented on button
      */
     @Override
     public void updateButton(JButton button, int data) {
