@@ -27,12 +27,15 @@ public class MancalaController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         GameButton gb = (GameButton) e.getSource();
         model.makeMove(gb.getPlayerId(), gb.getButtonId());
+ 
         if (model.isLegalMove()) {
             String htmlString = "<html> <font color=" + gb.getView().getPitTextColor() + ">UNDO?</font>";
             gb.setText(htmlString);
-            if(gb.getView().getClass() == LuxuryView.class ||
-            		gb.getView().getClass() == IconView.class)
+            if(gb.getView().getClass().equals(LuxuryView.class) ||
+            		gb.getView().getClass().equals(IconView.class))
             	gb.setBorder(null);
+            
         }
+        
     }
 }
