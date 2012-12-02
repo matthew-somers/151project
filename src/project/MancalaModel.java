@@ -28,6 +28,7 @@ public class MancalaModel extends Observable {
     
     private int undoCount;
     private boolean legalMove;
+    private boolean gotextraturn;
 
     /**
      * Constructor for this model.
@@ -46,6 +47,7 @@ public class MancalaModel extends Observable {
         views = new ArrayList<MancalaView>();
         gameOver = false;
         legalMove = false;
+        gotextraturn = false;
         // randomly set last player
         lastPlayer = 1 + (int) (Math.floor(Math.random() * 2.0));
     }
@@ -108,7 +110,7 @@ public class MancalaModel extends Observable {
         }
 
         // ignore moves of empty pits
-        if (lastPlayer != playerId
+        if (lastPlayer != playerId && !gotextraturn
                 && ((playerId == 1 && p1board[buttonId] == 0)
                 || (playerId == 2 && p2board[buttonId] == 0))) {
             return;
@@ -130,15 +132,18 @@ public class MancalaModel extends Observable {
 
         //game logic goes here
         // undo & set up check
-        if (lastPlayer == playerId) {
-            if (lastButtonId == buttonId
-                    && ((lastPlayer == 1 && p1board[buttonId] == 0) || (lastPlayer == 2 && p2board[buttonId] == 0))) {
+        if (lastPlayer == playerId || (gotextraturn && lastButtonId == buttonId)) {
+            if (lastButtonId == buttonId && ((lastPlayer == 1 && p1board[buttonId] == 0) 
+                || (lastPlayer == 2 && p2board[buttonId] == 0 || gotextraturn))) {
                 //undo move
                 if (undoCount < 3) {
                     System.arraycopy(undoP1board, 0, p1board, 0, p1board.length);
                     System.arraycopy(undoP2board, 0, p2board, 0, p2board.length);
                     undoCount++;
-                    resetLastPlayer(); // give player back their turn
+                    if (!gotextraturn)
+                    	resetLastPlayer(); // give player back their turn
+                    
+                    gotextraturn = false;
                     notifyViews();
                     freemove = true;
                 }
@@ -211,6 +216,9 @@ public class MancalaModel extends Observable {
         if (!gameOver && (currentPl == lastPlayer && currentButton == PIT_SIZE)) {
             resetLastPlayer(); // free turn
         }
+        
+        else
+        	gotextraturn = false;
 
         notifyViews();
         if (!gameOver) {
@@ -314,6 +322,7 @@ public class MancalaModel extends Observable {
      * Resets current player in case of extra turn being awarded.
      */
     private void resetLastPlayer() {
+    	gotextraturn = true;
         lastPlayer = lastPlayer == 1 ? 2 : 1;
     }
     
