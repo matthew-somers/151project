@@ -39,10 +39,19 @@ public class LuxuryView implements MancalaView {
      * @author lamlu
      *
      */
-    class BackgroundPanel extends JPanel {
-
-        ImageIcon bgIcon = new ImageIcon("images/woodenBackground.png");
-        Image bg = bgIcon.getImage();
+    class BackgroundPanel extends JPanel
+    {
+    	ImageIcon bgIcon;//icon contains the image
+    	Image bg; //image
+    	/**
+    	 * constructor for this inner class
+    	 * @param pgPath the path to the background image
+    	 */
+    	public BackgroundPanel(String bgPath)
+    	{
+    		bgIcon = new ImageIcon(bgPath);
+    		bg = bgIcon.getImage();
+    	}
 
         @Override
         public void paintComponent(Graphics g) {
@@ -56,21 +65,23 @@ public class LuxuryView implements MancalaView {
      * @param controller the controller of the Mancala game
      */
     public LuxuryView(MancalaController controller) {
-        p1MancalaPanel = new BackgroundPanel();
+        p1MancalaPanel = new BackgroundPanel("images/woodenBackground.png");
         p1MancalaPanel.setLayout(new FlowLayout());
         topturn = new JLabel("<html> <font color=" + "#FFFFFF" + ">" + "Top's Turn" + "</font>");
         botturn = new JLabel("<html> <font color=" + "#FFFFFF" + ">" + "Bottom's Turn" + "</font>");
         topturn.setPreferredSize(new Dimension(35, 30));
         botturn.setPreferredSize(new Dimension(50,30));
         
-        p2MancalaPanel = new BackgroundPanel();
+        p2MancalaPanel = new BackgroundPanel("images/woodenBackground.png");
         p2MancalaPanel.setLayout(new FlowLayout());
-        boardview = new BackgroundPanel();
-        pits = new JPanel(new BorderLayout());
-        pit1 = new BackgroundPanel();
+        boardview = new BackgroundPanel("images/rootBG.png");
+        //pits = new JPanel(new BorderLayout());
+        pits = new BackgroundPanel("images/rootBG.png");
+        pits.setLayout(new BorderLayout());
+        pit1 = new BackgroundPanel("images/woodenBackground.png");
         pit1.setLayout(new GridLayout(0, 6));
         pit1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-        pit2 = new BackgroundPanel();
+        pit2 = new BackgroundPanel("images/woodenBackground.png");
         pit2.setLayout(new GridLayout(0, 6));
         pit2.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 

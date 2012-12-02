@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 /**
  * Tells buttons what to do for a mancala board.
- * @author Wesley Eversole, Matthew Somers
+ * @author Wesley Eversole, Matthew Somers, modified by Lam Lu
  */
 public class MancalaController implements ActionListener {
 
@@ -30,6 +30,9 @@ public class MancalaController implements ActionListener {
         if (model.isLegalMove()) {
             String htmlString = "<html> <font color=" + gb.getView().getPitTextColor() + ">UNDO?</font>";
             gb.setText(htmlString);
+            if(gb.getView().getClass() == LuxuryView.class ||
+            		gb.getView().getClass() == IconView.class)
+            	gb.setBorder(null);
         }
     }
 }
