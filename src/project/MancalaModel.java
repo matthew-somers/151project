@@ -82,7 +82,7 @@ public class MancalaModel extends Observable {
 
     /**
      * Adds a new view to the model.
-     * @param mview
+     * @param mview A view to be added.
      */
     public void addView(MancalaView mview) {
         views.add(mview);
@@ -91,8 +91,8 @@ public class MancalaModel extends Observable {
 
     /**
      * Checks a move and if it is legal and if so makes the move.
-     * @param playerId
-     * @param buttonId 
+     * @param playerId The id for this button's player
+     * @param buttonId The id of the particular button
      */
     public void makeMove(int playerId, int buttonId) {
         int moreStones;
@@ -100,7 +100,7 @@ public class MancalaModel extends Observable {
         int currentButton;
 
         legalMove = false;
-        // saftey checks for bad interfaces
+        // safety checks for bad interfaces
 
         // ignore moves once game is over
         if (gameOver) {
@@ -126,7 +126,7 @@ public class MancalaModel extends Observable {
         // end saftey checks
 
         //System.out.println("player id = " + playerId);
-        //System.out.println("buttion id = " + buttonId);
+        //System.out.println("button id = " + buttonId);
 
         //game logic goes here
         // undo & set up check
@@ -244,8 +244,8 @@ public class MancalaModel extends Observable {
 
     /**
      * Checks if a move captures opponents stones.
-     * @param player
-     * @param pit
+     * @param player The current player we're working with.
+     * @param pit The pit we're checking.
      */
     private void checkCaptureMove(int player, int pit) {
         if (player == 1) {
